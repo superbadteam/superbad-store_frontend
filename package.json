@@ -1,0 +1,37 @@
+{
+  "name": "tailmin-vue",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --port 3012",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@heroicons/vue": "^2.0.18",
+    "@kyvg/vue3-notification": "^3.0.2",
+    "@videojs-player/vue": "^1.0.0",
+    "@vue-hero-icons/outline": "^1.7.2",
+    "apexcharts": "^3.37.1",
+    "axios": "^1.5.0",
+    "pinia": "^2.1.6",
+    "video.js": "^8.5.2",
+    "vue": "^3.3.4",
+    "vue-router": "^4.1.6",
+    "vue3-apexcharts": "^1.4.1"
+  },
+  "devDependencies": {
+    "@headlessui/vue": "^1.7.12",
+    "@tailwindcss/forms": "^0.5.3",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.3.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
+    "postcss": "^8.3.6",
+    "prettier": "^2.8.4",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.1.4"
+  }
+}

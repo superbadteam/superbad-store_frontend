@@ -1,0 +1,45 @@
+:root {
+	--border-color: #363636;
+	--bg-hover: #1b1b1d;
+	--bg-primary: #1b1b1d;
+	--green-primary: #16b67c;
+	--gray-hover: #2e2e2e;
+}
+body {
+	font-size: .875rem;
+	font-weight: 400;
+	background: #000;
+	color: #ffffff;
+}
+textarea {
+	resize: none;
+	box-shadow: none;
+	border: none;
+}
+textarea:focus {
+	outline: none;
+	border: none;
+	box-shadow: none;
+}
+
+::-webkit-scrollbar {width: 10px; height: 4px; background: #1b1b1d; }
+::-webkit-scrollbar-thumb { background-color: #2a2a2a; -webkit-border-radius: 1ex; }
+::-webkit-scrollbar-thumb:hover { background-color: #797979; cursor: pointer; }
+.resize-animation {
+	transition: all .2s ease-in-out;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: .3s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
