@@ -4,12 +4,13 @@
 	--bg-primary: #1b1b1d;
 	--green-primary: #16b67c;
 	--gray-hover: #2e2e2e;
+  --shadow-primary: 0px 4px 35px 0px rgba(0, 0, 0, 0.08);
 }
 body {
 	font-size: .875rem;
 	font-weight: 400;
-	background: #000;
-	color: #ffffff;
+	/* background: #000; */
+	/* color: #ffffff; */
 }
 textarea {
 	resize: none;
@@ -42,4 +43,8 @@ textarea:focus {
   to {
     opacity: 1;
   }
+}
+
+.gb-shadow {
+  box-shadow: var(--shadow-primary);
 }
