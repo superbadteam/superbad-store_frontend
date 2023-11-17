@@ -10,7 +10,14 @@ export const refreshAccessToken = async () => {
   return await axios.post('/auth/refresh-tokens', data)
 }
 export const loginApi = async (data) => {
-  return await axiosApiInstance.post('/auth/login', data)
+  return await axiosApiInstance.post('/auth/login', data, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'hello': 'hi'
+    }, mode: 'no-cors'
+  })
 }
 export const loginGGApi = async (data) => {
   return await axiosApiInstance.post('/auth/login-gg', data)

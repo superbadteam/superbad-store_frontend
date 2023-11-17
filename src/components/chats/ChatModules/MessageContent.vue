@@ -12,11 +12,11 @@ const authStore = useAuthStore().state
       alt=""
     />
     <div class="flex flex-col gap-1 w-full justify-end">
-      <p v-if="authStore.user.id != message.sender_id" class="text-xs">{{ message.name }}</p>
+      <p v-if="authStore.user?.id != message.sender_id" class="text-xs">{{ message.name }}</p>
       <p
         class="bg-[var(--bg-primary)] p-3 rounded-[20px] w-fit max-w-[90%]"
         :class="{
-          'bg-[var(--green-primary)]': authStore.user.id == message.sender_id,
+          'bg-[var(--green-primary)]': authStore.user?.id == message.sender_id,
           'ml-auto': authStore.user.id == message.sender_id,
         }"
       >
