@@ -36,8 +36,8 @@ axiosApiInstance.interceptors.response.use(
       originalRequest._retry = true
       try {
         const token = await refreshAccessToken()
-        localStorage.setItem('access_token', token.data.access.token)
-        localStorage.setItem('refresh_token', token.data.refresh.token)
+        localStorage.setItem('access_token', token.data.accessToken)
+        localStorage.setItem('refresh_token', token.data.refreshToken)
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.data.access.token
         return axiosApiInstance(originalRequest)
       } catch (error) {

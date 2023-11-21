@@ -18,6 +18,12 @@ const routes = [
     meta: { layout: 'empty' },
     component: () => import('@/views/auth/RegisterPage.vue'),
   },
+  {
+    path: '/create-product',
+    name: 'create-product',
+    meta: { requiresAuth: true },
+    component: () => import('@/views/product/CreateProductView.vue'),
+  },
 ]
 const router = createRouter({
   history: createWebHistory(),

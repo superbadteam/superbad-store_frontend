@@ -1,13 +1,15 @@
 <template>
   <div class="flex w-full px-5 pt-7 justify-center gap-5">
-    <div class="flex w-[70vw] h-fit bg-[#121213] rounded-[8px] justify-center py-5">
+    <div class="flex w-full max-w-[1200px] max-[1254px]:w-full h-fit rounded-[8px] justify-center py-5">
+      <HomePage />
     </div>
-  </div> {{ layout }}
+  </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
+import HomePage from '@/components/home/HomePage.vue'
 const route = useRoute()
 const layoutMeta = computed(() => {
   return route.meta

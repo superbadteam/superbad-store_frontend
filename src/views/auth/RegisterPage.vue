@@ -1,214 +1,107 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-    <div class="max-w-md w-full">
-      <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Đăng ký tài khoản</h2>
+  <div class="min-h-screen h-screen relative">
+    <!-- <div ref="googleLoginBtn" class=""></div> -->
+    <!-- <div ref="googleLoginBtn" /> -->
+    <div class="h-full flex flex-col w-full">
+      <div class="flex-1 bg-[#0089ED] w-full h-full"></div>
+      <div class="flex-1"></div>
+    </div>
 
-      <div>
-        <button
-          class="w-full flex justify-center py-3 px-4 border border-gray-300 font-medium rounded-md text-gray-900 bg-white focus:outline-none"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-6 w-6 mr-2">
-            <g>
-              <path
-                fill="#EA4335"
-                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-              ></path>
-              <path
-                fill="#4285F4"
-                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-              ></path>
-              <path
-                fill="#FBBC05"
-                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-              ></path>
-              <path
-                fill="#34A853"
-                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-              ></path>
-              <path fill="none" d="M0 0h48v48H0z"></path>
-            </g>
-          </svg>
-          Sign in with Google
-        </button>
-      </div>
-
-      <div class="flex items-center justify-center space-x-2 my-4">
-        <span class="h-px w-full bg-gray-300"></span>
-        <span class="px-2 text-gray-500">or</span>
-        <span class="h-px w-full bg-gray-300"></span>
-      </div>
-
-      <form class="space-y-4" @submit.prevent="submit">
-        <div class="relative text-gray-400">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </span>
-          <input
-            id="name"
-            v-model="name"
-            name="name"
-            type="text"
-            class="w-full py-4 text-sm text-gray-900 rounded-md pl-10 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            placeholder="Tên tài khoản"
-            required=""
-          />
+    <div class="absolute top-0 left-0 w-full h-full flex justify-between items-center p-7 px-12 overflow-y-auto">
+      <div></div>
+      <div class="w-[500px] bg-white rounded-[30px] gb-shadow p-7 h-fit">
+        <!-- header -->
+        <div class="flex justify-between">
+          <div class="">
+            <p class="text-xl">Welcome to our shop</p>
+            <p class="text-[50px] font-medium">Sign Up</p>
+          </div>
+          <div class="text-[#0089ED] text-sm font-bold cursor-pointer">Login</div>
         </div>
+        <!-- end header -->
 
-        <div class="relative text-gray-400">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </span>
-          <input
-            id="email"
-            v-model="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            class="w-full py-4 text-sm text-gray-900 rounded-md pl-10 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            placeholder="Email address"
-            required=""
-          />
+        <!-- form -->
+        <div class="mt-10">
+          <form class="mt-7" @submit.prevent="submit">
+            <div class="flex flex-col gap-7">
+              <div>
+                <label for="email" class="text-sm">Email</label>
+                <input
+                  id="email"
+                  v-model="email"
+                  type="text"
+                  class="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2"
+                />
+              </div>
+              <div>
+                <label for="name" class="text-sm">Name</label>
+                <input
+                  id="name"
+                  v-model="name"
+                  type="text"
+                  class="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2"
+                />
+              </div>
+              <div>
+                <label for="email" class="text-sm">Password</label>
+                <input
+                  id="password"
+                  v-model="password"
+                  type="password"
+                  class="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2"
+                />
+              </div>
+            </div>
+            <p>
+              <a href="" class="text-[#0089ED] text-sm font-bold mt-3 block">Forgot password?</a>
+            </p>
+            <div class="mt-7">
+              <button
+                type="button"
+                class="w-full bg-[#0089ED] text-white rounded-[8px] p-3 font-bold text-lg"
+                @click="submit"
+              >
+                Đăng nhập
+              </button>
+            </div>
+          </form>
+          <router-link class="text-center pt-4 block" to="/login">
+            <p>Have account yet? <span class="text-[#0089ED] font-bold">Sign in</span></p>
+          </router-link>
         </div>
-
-        <div class="relative text-gray-400">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
-          </span>
-          <input
-            id="password"
-            v-model="password"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            required=""
-            class="w-full py-4 text-sm text-gray-900 rounded-md pl-10 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            placeholder="Password"
-          />
-        </div>
-
-        <div class="relative text-gray-400">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
-          </span>
-          <input
-            id="password"
-            v-model="confirmPassword"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            required=""
-            class="w-full py-4 text-sm text-gray-900 rounded-md pl-10 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            placeholder="Password"
-          />
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            class="group relative w-full flex justify-center py-4 px-6 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Đăng ký
-          </button>
-        </div>
-      </form>
-
-      <div class="mt-2 text-sm text-gray-600">
-        Not registered yet? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Create an account</a>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { initAuthStore } from '@/stores/auth.store'
+import { initAuthStore } from '@/stores'
 import { registerApi } from '@/services/auth.service'
 import { useNotification } from '@kyvg/vue3-notification'
 const notification = useNotification()
 const router = useRouter()
-const name = ref('')
 const email = ref('')
 const password = ref('')
-const confirmPassword = ref('')
+const name = ref('')
+
 const submit = async () => {
   try {
-    if (password.value.trim() != confirmPassword.value.trim()) {
-      notification.notify({
-        type: 'error',
-        title: 'Mật khẩu xác nhận không khớp',
-      })
-      return
-    }
-    await registerApi({ name: name.value.trim(), email: email.value.trim(), password: password.value.trim() }).then(
-      (res) => {
-        const data = res['data']
-        localStorage.setItem('access_token', data.tokens.access.token)
-        localStorage.setItem('refresh_token', data.tokens.refresh.token)
-      }
-    )
-    await initAuthStore()
-    router.push('/users')
+    await registerApi({ email: email.value, password: password.value, name: name.value }).then((res) => {
+      // const data = res['data']
+      // localStorage.setItem('access_token', data.tokens.access.token)
+      // localStorage.setItem('refresh_token', data.tokens.refresh.token)
+    })
+    // await initAuthStore()
+    // router.push('/')
   } catch (error) {
-    if (error.response?.data?.message) {
-      notification.notify({
-        type: 'error',
-        title: 'Đăng ký thất bại',
-        text: error.response.data.message,
-      })
-    }
+    console.log(error)
+    // notification.notify({
+    //   type: 'error',
+    //   title: 'Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập',
+    //   text: error.response.data.message,
+    // })
     console.log(error)
   }
 }

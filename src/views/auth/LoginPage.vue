@@ -7,9 +7,9 @@
       <div class="flex-1"></div>
     </div>
 
-    <div class="absolute top-0 left-0 w-full h-full flex justify-between p-7 px-12">
+    <div class="absolute top-0 left-0 w-full h-full flex justify-between items-center p-7 px-12 overflow-y-auto">
       <div></div>
-      <div class="w-[500px] h-[90%] bg-white rounded-[30px] gb-shadow p-7 overflow-y-auto">
+      <div class="w-[500px] bg-white rounded-[30px] gb-shadow p-7 h-fit">
         <!-- header -->
         <div class="flex justify-between">
           <div class="">
@@ -22,9 +22,7 @@
 
         <!-- form -->
         <div class="mt-10">
-          <div ref="googleLoginBtn" class=""></div>
-
-          <form @submit.prevent="submit" class="mt-7">
+          <form class="mt-7" @submit.prevent="submit">
             <div class="flex flex-col gap-7">
               <div>
                 <label for="email" class="text-sm">Email</label>
@@ -58,6 +56,9 @@
               </button>
             </div>
           </form>
+          <router-link class="text-center pt-4 block" to="/register">
+            <p>Not have account yet? <span class="text-[#0089ED] font-bold">Register</span></p>
+          </router-link>
         </div>
       </div>
     </div>
@@ -109,12 +110,13 @@ const handleCredentialResponse = async (res) => {
 const submit = async () => {
   try {
     await loginApi({ email: email.value, password: password.value }).then((res) => {
-      // const data = res['data']
-      // localStorage.setItem('access_token', data.tokens.access.token)
-      // localStorage.setItem('refresh_token', data.tokens.refresh.token)
+      const data = res['data']
+      console.log(data)
+      localStorage.setItem('access_token', data.token.accessToken)
+      localStorage.setItem('refresh_token', data.token.refreshToken)
     })
-    // await initAuthStore()
-    // router.push('/')
+    await initAuthStore()
+    router.push('/')
   } catch (error) {
     console.log(error)
     // notification.notify({
