@@ -1,0 +1,39 @@
+<script setup>
+import { ref } from 'vue'
+import { uploadApi } from '@/services/product.service'
+const props = defineProps(['modelValue', 'autoUpload'])
+const emits = defineEmits(['update:modelValue'])
+const filePicker = ref(null)
+const openFilePicker = () => {
+  filePicker.value.click()
+}
+
+const onFileChange = (e) => {
+  const files = e.target.files
+  if (files.length) {
+    const file = files[0]
+    console.log(file)
+    if (props.autoUpload) {
+      const formData = new FormData()
+      formData.append('file', file)
+      uploadApi(formData)
+        .then((res) => {
+          console.log(res)
+          emits('update:modelValue', res.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      emits('update:modelValue', file)
+    }
+    // clear file input
+    filePicker.value.value = ''
+  }
+}
+</script>
+<template>
+  <div class="w-full h-full" @click="openFilePicker">
+    <input ref="filePicker" type="file" style="display: none" @change="onFileChange" />
+  </div>
+</template>

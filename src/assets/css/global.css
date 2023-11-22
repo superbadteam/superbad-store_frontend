@@ -112,3 +112,15 @@ textarea:focus {
   -webkit-box-orient: vertical;  
   overflow: hidden;
 }
+/* w-full rounded-md border-[1px] border-[#ebebeb] */
+.inp-common {
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #4b5563;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

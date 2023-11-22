@@ -1,21 +1,8 @@
 <script setup>
-import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import ModalProfile from '@/components/profiles/ModalProfile.vue'
 import SearchWrapper from '@/components/layouts/SearchModal/SearchWrapper.vue'
 const authStore = useAuthStore().state
-
-const isShowPopupSearch = ref(false)
-const isShowPopupProfile = ref(false)
-
-const closePopupSearch = () => {
-  isShowPopupSearch.value = false
-}
-
-const closePopupProfile = () => {
-  console.log('close')
-  isShowPopupProfile.value = false
-}
 </script>
 <template>
   <div class="fixed top-0 left-0 z-50 border-b-[1px] w-full h-[90px] bg-white gb-shadow flex flex-col">
@@ -28,9 +15,9 @@ const closePopupProfile = () => {
     <!-- end top line -->
 
     <!-- bottom line -->
-    <div class="flex justify-between w-full items-center px-3" style="flex: 1 1 auto">
+    <div class="flex justify-between w-full items-center px-10" style="flex: 1 1 auto">
       <!-- flex-auto -->
-      <div>SUPERBAD.<span class="underlined underline-mask">STORE</span></div>
+      <div class="font-bold text-lg">SUPERBAD.<span class="underlined underline-mask">STORE</span></div>
       <SearchWrapper />
       <div class="flex">
         <div v-if="!authStore.isLoggedIn" class="flex gap-3">

@@ -18,6 +18,14 @@ const closeModal = (type) => {
 const closeSettings = () => {
   modal.value.isShowSettings = false
 }
+
+const logout = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
+  authStore.isLoggedIn = false
+  authStore.user = null
+  window.location.href = '/'
+}
 </script>
 <template>
   <ModalInfo v-if="modal.isShowProfile" @close="closeModal('isShowProfile')" />
@@ -75,7 +83,7 @@ const closeSettings = () => {
             <p>Change password</p>
           </div>
         </div>
-        <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+        <div @click="logout" class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
           <i class="ri-login-box-line"></i>
           <p>logout</p>
         </div>
