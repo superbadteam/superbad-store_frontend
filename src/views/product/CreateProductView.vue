@@ -189,6 +189,47 @@ const totalImageUploaded = ref({
           </div>
         </div>
       </div>
+      <!-- information -->
+      <div class="flex-1 h-full">
+        <div class="flex w-full gap-6">
+          <div class="w-[60%]">
+            <p class="font-semibold mb-3">Product name:</p>
+            <input
+              v-model="newProduct.name"
+              placeholder="Enter name..."
+              class="w-full rounded-md border-[1px] border-[#ebebeb]"
+              type="text"
+            />
+          </div>
+          <div class="flex-auto">
+            <p class="font-semibold mb-3">Category:</p>
+            <input
+              value="3fa85f64-5717-4562-b3fc-2c963f66afa6"
+              class="w-full rounded-md border-[1px] border-[#ebebeb]"
+              type="text"
+            />
+          </div>
+        </div>
+        <!-- description -->
+        <div class="flex w-full gap-6 mt-6">
+          <div class="w-full">
+            <p class="font-semibold mb-3">Description:</p>
+            <div class="border-[1px] min-h-[200px] rounded-md">
+              <div ref="vEditor"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-auto mt-5">
+          <p class="font-semibold mb-3">Condition:</p>
+          <input
+            value="3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            class="w-full rounded-md border-[1px] border-[#ebebeb]"
+            type="text"
+          />
+        </div>
+        <!-- image by type -->
+        <ImageByTypePicker v-model="newProduct.types" />
+      </div>
     </div>
   </div>
   <!-- </div> -->
