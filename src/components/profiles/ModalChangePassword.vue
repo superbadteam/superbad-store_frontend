@@ -50,14 +50,11 @@ defineEmits(['close'])
           />
         </div>
         <div class="flex gap-3 mt-4">
+          <button class="w-full text-gray-900 bg-white border-[1px] rounded-[6px] p-2 mt-2" @click="$emit('close')">
+            <span class="text-sm font-medium">Exit</span>
+          </button>
           <button class="w-full bg-[#5a4098] text-white rounded-[6px] p-2 mt-2">
             <span class="text-sm font-medium">Change password</span>
-          </button>
-          <button
-            class="w-full text-gray-900 bg-white border-[1px] text-white rounded-[6px] p-2 mt-2"
-            @click="$emit('close')"
-          >
-            <span class="text-sm font-medium">Exit</span>
           </button>
         </div>
       </form>

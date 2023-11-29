@@ -8,6 +8,7 @@ import Notifications from '@kyvg/vue3-notification'
 import { initAuthStore } from '@/stores'
 import { authMiddleware } from '@/router/router.middleware'
 import defaultLayout from '@/layouts/defaultLayout.vue'
+import dashboardLayout from '@/layouts/dashboardLayout.vue'
 import emptyLayout from '@/layouts/emptyLayout.vue'
 import touchOutSide from '@/plugins/handleClick'
 import 'remixicon/fonts/remixicon.css'
@@ -21,6 +22,7 @@ const initApp = async () => {
   app.use(touchOutSide)
   app.component('DefaultLayout', defaultLayout)
   app.component('EmptyLayout', emptyLayout)
+  app.component('DashboardLayout', dashboardLayout)
   app.use(Notifications)
   router.isReady().then(() => {
     console.log('router ready')
