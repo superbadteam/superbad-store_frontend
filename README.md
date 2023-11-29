@@ -14,7 +14,8 @@
 
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/7092e3f7-baed-4e16-ae2c-f86090f09b5b)
 
-![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/6528b3f1-091c-428d-97fd-d5a1da16fe20)
+![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/20d60065-ecdd-4e8d-88ea-983c550bc0b4)
+
 ## Running Tests
 
 To run tests, run the following command
