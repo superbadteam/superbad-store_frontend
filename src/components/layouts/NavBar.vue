@@ -35,7 +35,7 @@ const authStore = useAuthStore().state
         <div v-else class="flex gap-5 items-center">
           <!-- tool left -->
           <router-link
-            to="/create-product"
+            to="/dashboard/create-product"
             class="border-[1px] bg-[#5a4098] text-white cursor-pointer hover:shadow-lg border-[#5a4098] py-1 px-2 rounded-md"
           >
             <i class="ri-add-line"></i>

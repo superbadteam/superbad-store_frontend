@@ -7,7 +7,7 @@ defineProps({
 })
 </script>
 <template>
-  <div class="bg-[#5a4098] text-white cursor-pointer hover:shadow-lg py-1 px-2 rounded-md">
+  <div class="bg-[#5a4098] py-1 px-2 cursor-pointer rounded-md">
     <slot name="left"></slot>
     <span>{{ title }}</span>
     <slot name="right"></slot>

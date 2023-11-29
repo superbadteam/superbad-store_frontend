@@ -10,7 +10,12 @@ const types = ref([
     imageUrl: '',
   },
 ])
-defineProps(['modelValue'])
+defineProps({
+  modelValue: {
+    type: Array,
+    default: () => [],
+  },
+})
 const emits = defineEmits(['update:modelValue'])
 
 watch(
@@ -33,7 +38,7 @@ const addType = () => {
 </script>
 <template>
   <div class="w-full">
-    <AButton title="New type" class="mt-6 w-fit" @click="addType">
+    <AButton title="New type" class="mt-6 w-fit text-white" @click="addType">
       <template #left>
         <i class="ri-add-line"></i>
       </template>
@@ -76,7 +81,7 @@ const addType = () => {
             <div v-else class="w-full h-[120px] rounded-lg p-3 flex items-center gap-5 bg-slate-100">
               <img class="w-[100px] h-[100px] object-cover rounded-md" :src="item.imageUrl" alt="" />
               <div class="h-full">
-                <p class="text-lg font-medium">Rất tiếc, bạn không có quyền truy cập vào sản phẩm này</p>
+                <p class="text-base font-medium">Rất tiếc, bạn không có quyền truy cập vào sản phẩm này</p>
                 <p>35MB</p>
               </div>
               <i class="ri-delete-bin-7-line text-rose-600"></i>
