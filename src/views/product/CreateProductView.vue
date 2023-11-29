@@ -189,59 +189,6 @@ const totalImageUploaded = ref({
           </div>
         </div>
       </div>
-      <!-- information -->
-      <div class="flex-1 h-full bg-white p-7 rounded-2xl">
-        <p class="text-lg font-medium mb-2">
-          Basic information
-          <span>
-            <!-- icon -->
-            <i class="ri-information-line"></i>
-          </span>
-        </p>
-        <div class="flex flex-col w-full gap-6">
-          <div class="w-full">
-            <AInput v-model="newProduct.name" is-required="true" label="Product name" placeholder="Enter name..." />
-          </div>
-          <div class="flex gap-2">
-            <AInput v-model="newProduct.category" is-required="true" label="Category" placeholder="Enter category..." />
-            <AInput
-              v-model="newProduct.condition"
-              is-required="true"
-              label="Condition"
-              placeholder="Enter condition..."
-            />
-          </div>
-        </div>
-        <!-- description -->
-        <div class="flex w-full gap-6 mt-6">
-          <div class="w-full">
-            <p class="font-medium text-base text-[#606570] mb-3">Description:</p>
-            <div class="border-[2px] min-h-[200px] rounded-md">
-              <div ref="vEditor"></div>
-            </div>
-          </div>
-        </div>
-        <div class="flex-auto mt-5">
-          <p class="font-semibold mb-3">Condition:</p>
-          <input
-            value="3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            class="w-full rounded-md border-[1px] border-[#ebebeb]"
-            type="text"
-          />
-        </div>
-        <!-- image by type -->
-        <ImageByTypePicker v-model="newProduct.types" />
-      </div>
-      <!-- end upload -->
-      <!-- image upload -->
-      <div class="flex-1 bg-white p-3 rounded-xl">
-        <div class="min-h-[715px] h-full overflow-y-auto p-5 shadow-sm">
-          <p class="text-lg font-medium">Image upload</p>
-          <div class="w-full h-[500px] mt-2">
-            <AFilePond v-model="files" :allow-multiple="true" />
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <!-- </div> -->
