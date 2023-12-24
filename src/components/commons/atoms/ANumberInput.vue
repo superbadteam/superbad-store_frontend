@@ -6,7 +6,7 @@
       style="outline: none"
       type="number"
       min="1"
-      max="9"
+      :max="max"
       step="1"
       @input="$emit('update:modelValue', $event.target.value)"
     />
@@ -20,20 +20,27 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Number,
     default: 1,
   },
+  max: {
+    type: Number,
+    default: 9,
+  },
 })
 const emits = defineEmits(['update:modelValue'])
 const increase = () => {
+  if (val.value + 1 > props.max) {
+    return
+  }
   val.value++
   emits('update:modelValue', val.value)
   console.log('increase')
 }
 const decrease = () => {
-  if (val.value < 1) {
+  if (val.value - 1 < 1) {
     val.value = 1
   } else val.value--
   emits('update:modelValue', val.value)

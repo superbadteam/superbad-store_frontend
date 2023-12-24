@@ -54,9 +54,7 @@ const openImage = () => {
   console.log('openImage')
   viewerInstance.value = new Viewer(document.getElementById('images'), {
     inline: false,
-    viewed() {
-      viewerInstance.value.zoomTo(1)
-    },
+    viewed() {},
   })
 }
 </script>
