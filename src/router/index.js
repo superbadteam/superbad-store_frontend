@@ -18,12 +18,19 @@ const routes = [
     meta: { layout: 'empty' },
     component: () => import('@/views/auth/RegisterPage.vue'),
   },
-  // {
-  //   path: '/create-product',
-  //   name: 'create-product',
-  //   meta: { requiresAuth: true },
-  //   component: () => import('@/views/product/CreateProductView.vue'),
-  // },
+  {
+    path: '/profiles/:id',
+    name: 'profile-detail',
+    props: {
+      type: 'VIEW',
+    },
+    component: () => import('@/views/dashboard/ProfileSetting.vue'),
+  },
+  {
+    path: '/products/:id',
+    name: 'product-detail',
+    component: () => import('@/views/product/_id/ProductDetailView.vue'),
+  },
   //create nested routes use for dashboard ex create & manage product
   {
     path: '/dashboard',
@@ -38,8 +45,17 @@ const routes = [
         component: () => import('@/views/product/CreateProductView.vue'),
       },
       {
+        path: 'manage-product',
+        name: 'manage-product',
+        meta: { requiresAuth: true },
+        component: () => import('@/views/dashboard/ProductManager.vue'),
+      },
+      {
         path: 'profile-settings',
         name: 'profile-settings',
+        props: {
+          type: 'SETTING',
+        },
         meta: { requiresAuth: true },
         component: () => import('@/views/dashboard/ProfileSetting.vue'),
       },
@@ -50,7 +66,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     meta: { layout: 'empty' },
-    component: () => import('@/views/404.vue'),
+    component: () => import('@/views/NotFoundPage.vue'),
   },
 ]
 const router = createRouter({

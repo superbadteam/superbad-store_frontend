@@ -29,7 +29,7 @@ defineEmits(['update:modelValue'])
 </script>
 <template>
   <div class="flex flex-col gap-0 w-full">
-    <p class="font-medium text-[#606570] text-base mb-2">
+    <p class="font-medium text-gray-700 text-base mb-2">
       {{ label }} <span v-if="isRequired" class="text-rose-600">*</span>
     </p>
     <input

@@ -77,16 +77,16 @@ const email = ref('')
 const password = ref('')
 const googleLoginBtn = ref()
 onMounted(() => {
-  console.log('onBeforeMount')
-  const gClientId = '539910609167-67i01tcoja47s71qshaeodhcc69d5u99.apps.googleusercontent.com'
-  window.google.accounts.id.initialize({
-    client_id: gClientId,
-    scope: 'email profile openid',
-    callback: handleCredentialResponse,
-    auto_select: true,
-  })
-  window.google.accounts.id.renderButton(googleLoginBtn.value, { theme: 'outline', size: 'large', width: '400' })
-  window.google.accounts.id.prompt()
+  // console.log('onBeforeMount')
+  // const gClientId = '539910609167-67i01tcoja47s71qshaeodhcc69d5u99.apps.googleusercontent.com'
+  // window.google.accounts.id.initialize({
+  //   client_id: gClientId,
+  //   scope: 'email profile openid',
+  //   callback: handleCredentialResponse,
+  //   auto_select: true,
+  // })
+  // window.google.accounts.id.renderButton(googleLoginBtn.value, { theme: 'outline', size: 'large', width: '400' })
+  // window.google.accounts.id.prompt()
 })
 
 const handleCredentialResponse = async (res) => {

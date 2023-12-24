@@ -14,6 +14,7 @@ const route = useRoute()
 const layoutMeta = computed(() => {
   return route.meta
 })
+
 const layout = computed(() => {
   console.log(layoutMeta.value)
   return (layoutMeta.value.layout || 'default') + '-layout'

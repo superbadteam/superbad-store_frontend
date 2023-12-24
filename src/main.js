@@ -5,7 +5,7 @@ import './assets/css/tailwind.css'
 import './assets/css/global.css'
 import { createPinia } from 'pinia'
 import Notifications from '@kyvg/vue3-notification'
-import { initAuthStore } from '@/stores'
+import { initAuthStore, initMasterStore } from '@/stores'
 import { authMiddleware } from '@/router/router.middleware'
 import defaultLayout from '@/layouts/defaultLayout.vue'
 import dashboardLayout from '@/layouts/dashboardLayout.vue'
@@ -17,6 +17,7 @@ const initApp = async () => {
   const app = createApp(App)
   app.use(createPinia())
   await initAuthStore()
+  await initMasterStore()
   app.use(router)
   authMiddleware()
   app.use(touchOutSide)
