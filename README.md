@@ -13,6 +13,7 @@
 ## Screenshots
 
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/7092e3f7-baed-4e16-ae2c-f86090f09b5b)
+![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/71720b65-2765-4f4e-9d96-f175f699e90f)
 
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/20d60065-ecdd-4e8d-88ea-983c550bc0b4)
 
