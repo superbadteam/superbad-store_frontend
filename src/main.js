@@ -12,6 +12,7 @@ import dashboardLayout from '@/layouts/dashboardLayout.vue'
 import emptyLayout from '@/layouts/emptyLayout.vue'
 import touchOutSide from '@/plugins/handleClick'
 import 'remixicon/fonts/remixicon.css'
+import ACustomPopup from '@/components/commons/atoms/ACustomPopup.vue'
 
 const initApp = async () => {
   const app = createApp(App)
@@ -24,6 +25,7 @@ const initApp = async () => {
   app.component('DefaultLayout', defaultLayout)
   app.component('EmptyLayout', emptyLayout)
   app.component('DashboardLayout', dashboardLayout)
+  app.component('ACustomPopup', ACustomPopup)
   app.use(Notifications)
   router.isReady().then(() => {
     console.log('router ready')

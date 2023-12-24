@@ -7,10 +7,11 @@ import ThumbnailsProduct from '@/components/products/ThumbnailsProduct.vue'
 import ShopDetail from '@/components/profiles/ShopDetail.vue'
 // services
 import { getProductApi } from '@/services/product.service'
+import { addToCartApi } from '@/services/cart.service'
 // stores
 import { useMasterStore } from '@/stores/master.store'
 import { useUserStore } from '@/stores/user.store'
-const masterStore = useMasterStore().state
+const masterStore = useMasterStore()
 const userStore = useUserStore()
 
 import { useRoute } from 'vue-router'
@@ -54,7 +55,7 @@ const getProduct = async () => {
   console.log(product.value)
 
   let routeSubCategory = {}
-  const routeCategory = masterStore.categories.find((category) =>
+  const routeCategory = masterStore.state.categories.find((category) =>
     category.subCategories.find((subCategory) => {
       if (subCategory.id === product.value.categoryId) {
         routeSubCategory = subCategory
@@ -85,6 +86,7 @@ const chooseType = (type) => {
     return
   }
   typeSelected.value = type
+  errValidate.value.cart = ''
 }
 
 const cart = ref({
@@ -105,6 +107,29 @@ const shopDetail = ref({
 onBeforeMount(async () => {
   await getProduct()
   shopDetail.value = await userStore.addUser(product.value.userId)
+})
+const errValidate = ref({
+  cart: '',
+})
+const addToCart = async () => {
+  try {
+    if (!typeSelected.value) {
+      errValidate.value.cart = 'Please choose type'
+      return
+    }
+    const res = await addToCartApi({
+      productTypeId: typeSelected.value.id,
+      quantity: cart.value.quantity,
+    })
+    masterStore.addToCart(res.data.items)
+    errValidate.value.cart = ''
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const modal = ref({
+  addToCartSuccess: false,
 })
 </script>
 <template>
@@ -156,7 +181,7 @@ onBeforeMount(async () => {
           <div v-html="product.description"></div>
         </div>
         <!-- add to card -->
-        <div class="min-w-[300px] w-[300px] h-[350px] p-5 border-[1px] rounded-lg">
+        <div class="min-w-[300px] w-[300px] h-fit p-5 border-[1px] rounded-lg">
           <div class="w-full flex justify-between items-center">
             <div class="flex items-center gap-3">
               <img
@@ -166,20 +191,28 @@ onBeforeMount(async () => {
               />
               <p>(choose type)</p>
             </div>
-            <p>In stock</p>
+            <p>
+              <span class="font-bold">{{ typeSelected?.quantity }}</span> In stock
+            </p>
           </div>
           <div class="border-b-[1px] pb-4"></div>
           <div class="mt-4 flex justify-between items-center">
             <p>Quantity</p>
             <div class="">
-              <ANumberInput v-model="cart.quantity" />
+              <ANumberInput v-model="cart.quantity" :max="typeSelected?.quantity" />
             </div>
           </div>
           <div class="mt-4 flex justify-between items-center">
             <p>Sub total</p>
             <p class="font-bold text-lg">${{ typeSelected?.price ? typeSelected?.price * cart.quantity : 0 }}</p>
           </div>
-          <div class="text-third-100 border-third-100 border-[2px] py-2 flex gap-3 justify-center rounded-md mt-5"><i class="ri-shopping-cart-2-line"></i> Add to cart</div>
+          <p class="text-rose-500">{{ errValidate?.cart }}</p>
+          <div
+            class="cursor-pointer text-third-100 border-third-100 border-[2px] py-2 flex gap-3 justify-center rounded-md mt-5"
+            @click="addToCart"
+          >
+            <i class="ri-shopping-cart-2-line"></i> Add to cart
+          </div>
           <div class="text-white bg-third-100 py-3 flex gap-3 justify-center rounded-md mt-4">Buy now</div>
           <div class="flex justify-center mt-4 items-center gap-5 font-medium">
             <p><i class="ri-heart-line"></i> Wish list</p>
@@ -192,7 +225,7 @@ onBeforeMount(async () => {
       <!-- detail shop -->
       <div class="w-full">
         <div class="border-b-[1px] pb-4"></div>
-          <ShopDetail :shop="shopDetail" />
+        <ShopDetail :shop="shopDetail" />
         <div class="border-b-[1px] pb-4"></div>
       </div>
     </div>

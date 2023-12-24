@@ -16,6 +16,9 @@ module.exports = {
         'secondary-200': '#ffcc5c',
         'third-100': '#5a4098',
       },
+      boxShadow: {
+        'd-10': '0px 4px 35px 0px rgba(0, 0, 0, 0.08);',
+      },
       fontFamily: {
         sans: ['Noto Sans JP', 'Sans-serif'],
       },

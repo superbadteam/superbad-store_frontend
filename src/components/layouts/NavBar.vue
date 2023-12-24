@@ -1,8 +1,21 @@
 <script setup>
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
+import { useMasterStore } from '@/stores/master.store'
 import ModalProfile from '@/components/profiles/ModalProfile.vue'
 import SearchWrapper from '@/components/layouts/SearchModal/SearchWrapper.vue'
+import CartModal from '../products/CartModal.vue'
 const authStore = useAuthStore().state
+const masterStore = useMasterStore().state
+
+const modal = ref({
+  changeAvatar: false,
+  showCart: false,
+})
+const closeModalCart = () => {
+  console.log('closeModalCart')
+  modal.value.showCart = false
+}
 </script>
 <template>
   <div class="fixed top-0 left-0 z-50 border-b-[1px] w-full h-[90px] bg-white gb-shadow flex flex-col">
@@ -41,8 +54,10 @@ const authStore = useAuthStore().state
             <i class="ri-add-line"></i>
             <span>New post</span>
           </router-link>
-          <div class="cursor-pointer">
-            <i class="ri-shopping-cart-line text-xl"></i>
+          <div class="relative">
+            <div class="absolute -right-3 -top-2 bg-rose-600 text-white w-5 h-5 rounded-full flex justify-center items-center" v-if="masterStore.cart.items.length > 0">{{ masterStore.cart.items.length }}</div>
+            <i @click.stop="modal.showCart = true" class="cursor-pointer ri-shopping-cart-line text-xl"></i>
+            <CartModal v-show="modal.showCart" v-touch-outside="closeModalCart" />
           </div>
           <div class="cursor-pointer">
             <i class="ri-heart-line text-xl"></i>
