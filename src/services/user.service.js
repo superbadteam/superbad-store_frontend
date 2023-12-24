@@ -8,3 +8,7 @@ export const updateUserApi = async (id, data) => {
   delete data.balance
   return await axiosApiInstance.patch(`/users/${id}`, data)
 }
+
+export const getUserApi = async (id) => {
+  return await axiosApiInstance.get(`/identity/users/${id}`)
+}

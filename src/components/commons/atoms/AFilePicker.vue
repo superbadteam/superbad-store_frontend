@@ -15,11 +15,11 @@ const onFileChange = (e) => {
     console.log(file)
     if (props.autoUpload) {
       const formData = new FormData()
-      formData.append('file', file)
+      formData.append('images', file)
       uploadApi(formData)
         .then((res) => {
           console.log(res)
-          emits('update:modelValue', res.data.data)
+          emits('update:modelValue', res.data.urls[0])
         })
         .catch((err) => {
           console.log(err)

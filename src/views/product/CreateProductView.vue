@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import AButton from '@/components/commons/atoms/AButton.vue'
 import Quill from 'quill'
@@ -9,6 +9,10 @@ import ImageByTypePicker from '@/components/products/CreatorModules/ImageByTypeP
 import AFilePond from '@/components/commons/atoms/AFilePond.vue'
 import AFullLoading from '@/components/commons/atoms/AFullLoading.vue'
 import AInput from '@/components/commons/atoms/AInput.vue'
+import ADropdown from '@/components/commons/atoms/ADropdown.vue'
+// stores
+import { useMasterStore } from '@/stores/master.store'
+const masterStore = useMasterStore().state
 // services
 import { uploadApi, createProductApi } from '@/services/product.service'
 // breadcrumb
@@ -30,6 +34,9 @@ onBeforeUnmount(() => {
   editor.value = null
 })
 
+const subCategory = computed(() => {
+  return masterStore.categories.find((category) => category.id === newProduct.value.parentCategory)?.subCategories || []
+})
 onMounted(() => {
   console.log('editor', editor.value)
   editor.value = new Quill(vEditor.value, {
@@ -48,7 +55,7 @@ const onCreate = async () => {
       try {
         const res = await uploadImage(file.file)
         newProduct.value.images.push({
-          url: res.data.data,
+          url: res.data.urls[0],
         })
         totalImageUploaded.value.success++
       } catch (error) {
@@ -71,16 +78,17 @@ const onCreate = async () => {
 const newProduct = ref({
   name: '',
   description: '',
-  category: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  categoryId: '',
   condition: 'new',
   types: [],
   images: [],
+  parentCategory: '',
 })
 
 const uploadImage = async (file) => {
   if (file) {
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('images', file)
     return await uploadApi(formData)
   }
 }
@@ -105,9 +113,9 @@ const totalImageUploaded = ref({
     <!-- <div class="absolute backdrop-blur w-full h-full flex justify-center top-0 left-0 z-10 pt-14">
       <div class="p-7 h-fit bg-white gb-shadow rounded-3xl flex flex-col justify-center items-center">
         <p class="text-lg font-semibold">Please confirm your email to create product</p>
-        <p class="text-sm text-secondary">We have sent you an email to confirm your email</p>
-        <p class="text-sm text-secondary">If you don't see the email, please check your spam folder</p>
-        <p class="text-sm text-secondary">If you still don't see the email, please contact us</p>
+        <p class="text-sm text-primary-200">We have sent you an email to confirm your email</p>
+        <p class="text-sm text-primary-200">If you don't see the email, please check your spam folder</p>
+        <p class="text-sm text-primary-200">If you still don't see the email, please contact us</p>
         <AButton title="Resend email" class="mt-5 w-fit text-white bg-blue-500">
           <template #left>
             <i class="ri-mail-send-line mr-2"></i>
@@ -122,7 +130,7 @@ const totalImageUploaded = ref({
         <BreadCrumb :routes="routes" />
       </div>
       <div class="flex gap-2">
-        <AButton title="Cancel" class="w-fit h-fit py-2 px-3 bg-slate-200 text-secondary" @click="onCreate">
+        <AButton title="Cancel" class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200" @click="onCreate">
           <template #left>
             <i class="ri-close-line"></i>
           </template>
@@ -150,7 +158,24 @@ const totalImageUploaded = ref({
             <AInput v-model="newProduct.name" is-required="true" label="Product name" placeholder="Enter name..." />
           </div>
           <div class="flex gap-2">
-            <AInput v-model="newProduct.category" is-required="true" label="Category" placeholder="Enter category..." />
+            <ADropdown
+              v-model="newProduct.parentCategory"
+              class="w-full h-full"
+              is-required="true"
+              label="Category"
+              :options="masterStore.categories"
+              placeholder="Select category..."
+              required
+            />
+            <ADropdown
+              v-model="newProduct.categoryId"
+              class="w-full h-full"
+              is-required="true"
+              label="Subcategory"
+              :options="subCategory"
+              placeholder="Select subcategory..."
+              required
+            />
             <AInput
               v-model="newProduct.condition"
               is-required="true"
@@ -162,7 +187,7 @@ const totalImageUploaded = ref({
         <!-- description -->
         <div class="flex w-full gap-6 mt-6">
           <div class="w-full">
-            <p class="font-medium text-base text-[#606570] mb-3">Description:</p>
+            <p class="font-medium text-base text-gray-700 mb-3">Description:</p>
             <div class="border-[2px] min-h-[200px] rounded-md">
               <div ref="vEditor"></div>
             </div>
