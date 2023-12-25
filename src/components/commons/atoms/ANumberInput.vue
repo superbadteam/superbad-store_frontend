@@ -1,5 +1,5 @@
 <template>
-  <div class="flex border-[2px] rounded-md px-2 py-1">
+  <div class="flex border-[2px] rounded-md px-2 py-1 w-fit">
     <input
       v-model="val"
       class="py-0 border-none"

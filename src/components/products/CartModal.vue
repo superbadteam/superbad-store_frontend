@@ -28,9 +28,13 @@
     <div class="border-b-[1px] mt-3"></div>
     <!-- btn checkout -->
     <div class="p-5">
-      <button class="rounded-md text-white text-base font-medium flex-auto bg-third-100 w-full h-[40px]">
+      <RouterLink
+        to="/checkout"
+        class="flex items-center justify-center rounded-md text-white text-base font-medium flex-auto bg-third-100 w-full h-[40px]"
+        @click="$emit('close')"
+      >
         Checkout
-      </button>
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -38,6 +42,7 @@
 import { computed } from 'vue'
 import { useMasterStore } from '@/stores/master.store'
 const masterStore = useMasterStore()
+defineEmits(['close'])
 // import { useCartStore } from '@/stores/cart.store'
 // const cartStore = useCartStore().state
 const cart = computed(() => masterStore.state.cart)

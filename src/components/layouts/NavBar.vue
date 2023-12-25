@@ -55,9 +55,14 @@ const closeModalCart = () => {
             <span>New post</span>
           </router-link>
           <div class="relative">
-            <div class="absolute -right-3 -top-2 bg-rose-600 text-white w-5 h-5 rounded-full flex justify-center items-center" v-if="masterStore.cart.items.length > 0">{{ masterStore.cart.items.length }}</div>
-            <i @click.stop="modal.showCart = true" class="cursor-pointer ri-shopping-cart-line text-xl"></i>
-            <CartModal v-show="modal.showCart" v-touch-outside="closeModalCart" />
+            <div
+              v-if="masterStore.cart.items.length > 0"
+              class="absolute -right-3 -top-2 bg-rose-600 text-white w-5 h-5 rounded-full flex justify-center items-center"
+            >
+              {{ masterStore.cart.items.length }}
+            </div>
+            <i class="cursor-pointer ri-shopping-cart-line text-xl" @click.stop="modal.showCart = true"></i>
+            <CartModal v-show="modal.showCart" v-touch-outside="closeModalCart" @close="closeModalCart" />
           </div>
           <div class="cursor-pointer">
             <i class="ri-heart-line text-xl"></i>
