@@ -90,9 +90,4 @@ const openImage = () => {
       </swiper-slide>
     </swiper>
   </div>
-  <div>
-    <div>
-      <!-- <img id="image" :src="'http://res.cloudinary.com/dtpqh6cau/image/upload/v1703415882/SuperBadStore/wfspcvrquvsedbf6zhcd.jpg'" alt="Picture" /> -->
-    </div>
-  </div>
 </template>
