@@ -2,6 +2,7 @@ import axios from 'axios'
 import { refreshAccessToken } from '@/services/auth.service'
 import { notify } from '@kyvg/vue3-notification'
 
+const excludeUrls = ['/auth/login', '/auth/refresh-tokens', '/sales/users/me/cart']
 const axiosApiInstance = axios.create()
 // set base api
 axiosApiInstance.defaults.baseURL = import.meta.env.VITE_API_URL
@@ -31,8 +32,7 @@ axiosApiInstance.interceptors.response.use(
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry &&
-      originalRequest.url !== '/auth/refresh-tokens' &&
-      originalRequest.url !== '/auth/login'
+      !excludeUrls.includes(originalRequest.url)
     ) {
       originalRequest._retry = true
       try {
