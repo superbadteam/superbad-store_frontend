@@ -36,6 +36,11 @@ const routes = [
     name: 'checkout',
     component: () => import('@/views/checkout/CheckoutView.vue'),
   },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/SearchView.vue'),
+  },
   //create nested routes use for dashboard ex create & manage product
   {
     path: '/dashboard',

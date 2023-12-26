@@ -19,6 +19,7 @@ module.exports = {
       boxShadow: {
         'd-10': '0px 4px 35px 0px rgba(0, 0, 0, 0.08);',
         'd-20': '0px 1px 10px 0px rgb(0 0 0 / 12%)',
+        'd-30': '0px 1px 4px 0px rgb(83 83 83 / 24%)',
       },
       fontFamily: {
         sans: ['Noto Sans JP', 'Sans-serif'],
