@@ -2,7 +2,7 @@ import axios from 'axios'
 import { refreshAccessToken } from '@/services/auth.service'
 import { notify } from '@kyvg/vue3-notification'
 
-const excludeUrls = ['/auth/login', '/auth/refresh-tokens', '/sales/users/me/cart']
+const excludeUrls = ['/auth/login', '/auth/refresh-tokens', '/shopping/users/me/cart']
 const axiosApiInstance = axios.create()
 // set base api
 axiosApiInstance.defaults.baseURL = import.meta.env.VITE_API_URL

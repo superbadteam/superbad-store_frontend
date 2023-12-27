@@ -37,6 +37,16 @@ const routes = [
     component: () => import('@/views/checkout/CheckoutView.vue'),
   },
   {
+    path: '/checkout-success/:id',
+    name: 'checkout-success',
+    component: () => import('@/views/checkout/CheckoutSuccess.vue'),
+  },
+  {
+    path: '/tracking-order/:id',
+    name: 'tracking-order',
+    component: () => import('@/views/checkout/TrackingOrder.vue'),
+  },
+  {
     path: '/search',
     name: 'search',
     component: () => import('@/views/SearchView.vue'),

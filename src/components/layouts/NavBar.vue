@@ -30,7 +30,9 @@ const closeModalCart = () => {
     <!-- bottom line -->
     <div class="flex justify-between w-full items-center px-10" style="flex: 1 1 auto">
       <!-- flex-auto -->
-      <div class="font-bold text-lg mr-5">SUPERBAD.<span class="underlined underline-mask">STORE</span></div>
+      <RouterLink to="/" class="font-bold text-lg mr-5"
+        >SUPERBAD.<span class="underlined underline-mask">STORE</span></RouterLink
+      >
       <SearchWrapper />
       <div class="flex">
         <div v-if="!authStore.isLoggedIn" class="flex gap-3">
