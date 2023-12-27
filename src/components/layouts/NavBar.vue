@@ -30,7 +30,7 @@ const closeModalCart = () => {
     <!-- bottom line -->
     <div class="flex justify-between w-full items-center px-10" style="flex: 1 1 auto">
       <!-- flex-auto -->
-      <div class="font-bold text-lg">SUPERBAD.<span class="underlined underline-mask">STORE</span></div>
+      <div class="font-bold text-lg mr-5">SUPERBAD.<span class="underlined underline-mask">STORE</span></div>
       <SearchWrapper />
       <div class="flex">
         <div v-if="!authStore.isLoggedIn" class="flex gap-3">
@@ -45,14 +45,14 @@ const closeModalCart = () => {
             </button>
           </router-link>
         </div>
-        <div v-else class="flex gap-5 items-center">
+        <div v-else class="ml-3 flex gap-5 items-center">
           <!-- tool left -->
           <router-link
             to="/dashboard/create-product"
             class="border-[1px] bg-[#5a4098] text-white cursor-pointer hover:shadow-lg border-[#5a4098] py-1 px-2 rounded-md"
           >
             <i class="ri-add-line"></i>
-            <span>New post</span>
+            <span class="whitespace-nowrap">New post</span>
           </router-link>
           <div class="relative">
             <div
