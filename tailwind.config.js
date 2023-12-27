@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         // Using modern `rgb`
+        'opacity-50': '#0000008f',
         'primary-100': 'rgb(255, 255, 255)',
         'primary-200': '#606570',
         'primary-300': '#ebeced',
