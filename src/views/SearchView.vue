@@ -1,24 +1,25 @@
 <template>
   <div class="w-full flex flex-col items-center">
-    <div class="w-full flex justify-center items-end p-5 pb-10 bg-third-100 h-[200px]">
+    <div class="max-md:h-[150px] w-full flex justify-center items-end p-5 pb-10 bg-third-100 h-[200px]">
       <!-- search value -->
       <div class="w-full max-w-[1440px]">
         <h1 class="text-white text-4xl font-bold">Cold Weather</h1>
+        <SearchWrapper class="w-full text-white" />
       </div>
     </div>
-    <div class="w-full max-w-[1440px] py-5">
+    <div class="max-md:px-5 w-full max-w-[1440px] py-5">
       <BreadCrumb :routes="routes" class="text-base" />
     </div>
     <div class="border-b-[1px] w-full"></div>
     <!-- main -->
-    <div class="w-full max-w-[1440px] mt-10 pb-10 flex gap-10 lg:px-5">
+    <div class="max-md:flex-col w-full max-w-[1440px] mt-10 pb-10 flex gap-10 lg:px-5">
       <!-- filter -->
-      <div class="w-[300px] min-w-[300px]">
+      <div class="max-md:w-full max-md:px-5 w-[300px] min-w-[300px]">
         <FilterBox v-model="filter" />
       </div>
       <!-- products -->
       <div class="flex-auto">
-        <div class="flex justify-between items-center">
+        <div class="max-md:flex-col max-md:px-5 flex justify-between items-center">
           <p class="text-lg font-bold">
             Showing {{ products.length }} results for:
             <span class="font-medium">{{ keyword }}</span>
@@ -49,9 +50,14 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-wrap gap-5 mt-5">
-          <router-link v-for="product in products" :key="product.name" :to="`/products/${product.id}`">
-            <ProductCard :product="product" />
+        <div class="max-md:grid max-md:grid-cols-2 max-md:gap-2 max-md:px-2 flex flex-wrap gap-5 mt-5">
+          <router-link
+            v-for="product in products"
+            :key="product.name"
+            class="max-md:w-full"
+            :to="`/products/${product.id}`"
+          >
+            <ProductCard :product="product" class="max-md:w-full" />
           </router-link>
         </div>
         <div class="mt-5">
@@ -68,6 +74,7 @@
   </div>
 </template>
 <script setup>
+import SearchWrapper from '@/components/search/SearchWrapper.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import FilterBox from '@/components/search/FilterBox.vue'
 import ProductCard from '@/components/products/ProductCard.vue'

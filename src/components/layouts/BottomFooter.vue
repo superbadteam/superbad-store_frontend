@@ -1,5 +1,5 @@
 <template>
-  <div class="h-fit min-h-[300px] flex flex-col items-center w-full bg-[#f9f9f9] mt-40 px-5">
+  <div class="max-md:py-5 h-fit flex flex-col items-center w-full bg-[#f9f9f9] mt-40 px-5">
     <div class="w-full max-w-[1440px] mt-10">
       <div class="w-full flex justify-between">
         <div>

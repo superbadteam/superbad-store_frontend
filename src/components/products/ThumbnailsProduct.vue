@@ -59,7 +59,7 @@ const openImage = () => {
 }
 </script>
 <template>
-  <div class="w-[350px] min-w-[350px]">
+  <div class="max-md:w-full max-md:min-w-[unset] w-[350px] min-w-[350px]">
     <div id="images" class="w-full bg-slate-300 h-[380px] overflow-hidden rounded-md mb-2">
       <img
         v-for="(thumb, index) in listImages"

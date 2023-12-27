@@ -6,11 +6,11 @@
         Offical Store</h4>
       <h4 class="text-third-100">See All</h4>
     </div>
-    <div class="w-full flex gap-5 mt-5 flex-wrap">
+    <div class="w-full flex max-md:grid max-md:grid-cols-2 gap-5 max-md:gap-3 mt-5 flex-wrap">
       <RouterLink
         v-for="(item, index) in shops"
         :key="index"
-        class="h-[220px] shadow-d-30 block bg-white rounded-md w-[183px]"
+        class="h-[220px] shadow-d-30 block bg-white rounded-md w-[183px] max-md:w-full"
         to="/"
       >
         <div class="w-full h-[140px] flex justify-center items-center bg-primary-400">

@@ -4,10 +4,14 @@ defineProps({
     type: Object,
     required: true,
   },
+  width: {
+    type: String,
+    default: 'w-[200px]',
+  },
 })
 </script>
 <template>
-  <div class="flex flex-col w-[200px] min-w-[200px] h-[330px] overflow-hidden product-card-shadow bg-white rounded-xl">
+  <div :class="`flex flex-col h-[330px] overflow-hidden product-card-shadow bg-white rounded-xl ${width}`">
     <img class="h-[180px] object-cover w-full" :src="product.imageUrl" alt="" />
     <div class="flex-auto p-3">
       <p class="text-sm font-semibold text-[#363636] truncate-2">{{ product.name }}</p>
