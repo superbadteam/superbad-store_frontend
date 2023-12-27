@@ -34,7 +34,7 @@
               <AButton
                 title="checkout"
                 class="text-white text-lg font-medium flex justify-center py-3"
-                @click="modal.isShowConfirm = true"
+                @click="checkout"
               />
             </div>
           </div>
@@ -80,12 +80,6 @@
         </div>
       </div>
     </div>
-    <ConfirmModal
-      v-if="modal.isShowConfirm"
-      content="Are you sure want to checkout"
-      @close="modal.isShowConfirm = false"
-      @confirm="checkout"
-    />
   </div>
 </template>
 <script setup>
@@ -93,12 +87,14 @@ import { ref, onBeforeMount, computed } from 'vue'
 // components
 import AButton from '@/components/commons/atoms/AButton.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
-import ConfirmModal from '@/components/commons/modal/ConfirmModal.vue'
 // services
 import { getProductApi } from '@/services/product.service'
 import { orderApi } from '@/services/order.service'
 // stores
-
+import { usePopupStore } from '@/stores/common.store'
+const popupStore = usePopupStore()
+import { useAuthStore } from '@/stores/auth.store'
+const authStore = useAuthStore()
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
@@ -140,23 +136,33 @@ const totalSubPrice = computed(() => {
   return typeSelected.value?.price * quantity?.value
 })
 
-const modal = ref({
-  isShowConfirm: false,
-  content: '',
-  isProcessing: false,
-})
-
 const checkout = async () => {
   try {
-    const method = 'TakeFromCart'
-    const body = {
-      shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      cartItemIds: selectItems.value,
-    }
-    await orderApi(body, method)
+    popupStore.showPopup({
+      content: 'Do you want to checkout now?',
+      type: 'confirm',
+      isAsync: true,
+      onConfirm: async () => {
+        try {
+          if (!authStore.state.isLoggedIn) {
+            localStorage.setItem('redirect', route.fullPath)
+            router.push({ name: 'login' })
+            return
+          }
+          const method = 'TakeFromCart'
+          const body = {
+            shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            cartItemIds: selectItems.value,
+          }
+          await orderApi(body, method)
+        } catch (error) {
+          console.log(error)
+          router.push({ name: 'checkout-success', params: { id: route.params.id } })
+        }
+      },
+    })
   } catch (error) {
     console.log(error)
-    router.push({ name: 'checkout-success', params: { id: route.params.id } })
   }
 }
 </script>

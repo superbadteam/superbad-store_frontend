@@ -64,9 +64,7 @@
           <div class="border-b-[1px] pb-4"></div>
           <div class="mt-4 flex justify-between items-center">
             <p>Quantity</p>
-            <div class="">
-              <ANumberInput v-model="cart.quantity" :max="typeSelected?.quantity" />
-            </div>
+            <ANumberInput v-model="cart.quantity" :max="typeSelected?.quantity" />
           </div>
           <div class="mt-4 flex justify-between items-center">
             <p>Sub total</p>
@@ -116,7 +114,8 @@ import { toast } from 'vue3-toastify'
 // stores
 import { useMasterStore } from '@/stores/master.store'
 const masterStore = useMasterStore()
-
+import { useAuthStore } from '@/stores/auth.store'
+const authStore = useAuthStore()
 import { usePopupStore } from '@/stores/common.store'
 const popupStore = usePopupStore()
 import { useRoute, useRouter } from 'vue-router'

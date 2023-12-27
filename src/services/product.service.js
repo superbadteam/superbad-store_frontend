@@ -19,7 +19,7 @@ export const getMyProductsApi = async (params) => {
 }
 
 export const getProductApi = async (id) => {
-  return await axiosApiInstance.get(`${BASE_INVENTORY_ENDPOINT}/products/me/${id}`)
+  return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products/${id}`)
 }
 
 export const searchProductsApi = async (query) => {

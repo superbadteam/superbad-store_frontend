@@ -67,12 +67,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { initAuthStore } from '@/stores'
 import { loginApi, loginGGApi } from '@/services/auth.service'
 // import { useNotification } from '@kyvg/vue3-notification'
 // const notification = useNotification()
 const router = useRouter()
+const route = useRoute()
 const email = ref('')
 const password = ref('')
 const googleLoginBtn = ref()
@@ -99,11 +100,7 @@ const handleCredentialResponse = async (res) => {
     await initAuthStore()
     router.push('/')
   } catch (error) {
-    notification.notify({
-      type: 'error',
-      title: 'Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập',
-      text: error.response.data.message,
-    })
+    
   }
 }
 
@@ -116,7 +113,13 @@ const submit = async () => {
       localStorage.setItem('refresh_token', data.token.refreshToken)
     })
     await initAuthStore()
-    router.push('/')
+    const redirect = localStorage.getItem('redirect')
+    if (redirect) {
+      router.push(redirect)
+    } else {
+      router.push('/')
+      localStorage.removeItem('redirect')
+    }
   } catch (error) {
     console.log(error)
     // notification.notify({

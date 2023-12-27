@@ -32,6 +32,8 @@ export const usePopupStore = defineStore('popup', () => {
         } finally {
           state.value.isProcessing = false
         }
+      } else {
+        state.value.onConfirm()
       }
     }
     hidePopup()
