@@ -15,8 +15,8 @@ defineProps({
       <p v-if="product?.maxPrice != undefined && product?.minPrice != undefined" class="mt-1 font-bold text-lg">
         ${{ product?.minPrice }} - ${{ product?.maxPrice }}
       </p>
-      <span class="bg-[#fff1f1] text-[#ff5353] text-xs font-bold px-1 py-1">{{ product.discount }}%</span>
-      <span class="text-primary-200 text-xs px-1 py-1">$100.00</span>
+      <!-- <span class="bg-[#fff1f1] text-[#ff5353] text-xs font-bold px-1 py-1">{{ product.discount }}%</span>
+      <span class="text-primary-200 text-xs px-1 py-1">$100.00</span> -->
       <div>
         <i class="ri-map-pin-2-fill text-primary-200"></i>
         <span class="ml-2 text-xs text-primary-200">{{ product.location }}</span>

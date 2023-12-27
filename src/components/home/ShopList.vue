@@ -1,7 +1,9 @@
 <template>
   <div class="w-full mt-20">
     <div class="w-full flex justify-between">
-      <h4 class="text-2xl font-bold">Offical Store</h4>
+      <h4 class="text-2xl font-bold">
+        <i class="ri-shield-check-fill text-green-500"></i>
+        Offical Store</h4>
       <h4 class="text-third-100">See All</h4>
     </div>
     <div class="w-full flex gap-5 mt-5 flex-wrap">
@@ -16,7 +18,7 @@
         </div>
         <div class="flex py-3 flex-col items-center">
           <p class="font-medium">{{ item.name }}</p>
-          <p class="font-base text-gray-400">Official store</p>
+          <p class="font-base text-gray-400"><i class="ri-shield-check-fill text-green-500 mr-1"></i>Official store</p>
         </div>
       </RouterLink>
     </div>
