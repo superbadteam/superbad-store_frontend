@@ -1,8 +1,8 @@
 <template>
-  <div class="flex border-[2px] rounded-md px-2 py-1 w-fit">
+  <div class="flex border-[2px] rounded-md px-2 py-1">
     <input
       v-model="val"
-      class="py-0 border-none"
+      class="py-0 border-none w-[100px]"
       style="outline: none"
       type="number"
       min="1"

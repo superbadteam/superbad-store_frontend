@@ -43,24 +43,5 @@
 import AButton from '@/components/commons/atoms/AButton.vue'
 import { usePopupStore } from '@/stores/common.store'
 const popupStore = usePopupStore()
-defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    default: 'confirm',
-  },
-  content: {
-    type: String,
-    default: 'Insert content here ',
-  },
-  isProcessing: {
-    type: Boolean,
-    default: false,
-  },
-})
-
 defineEmits(['close', 'confirm'])
 </script>
