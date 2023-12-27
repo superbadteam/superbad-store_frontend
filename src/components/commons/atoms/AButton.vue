@@ -4,10 +4,18 @@ defineProps({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    default: 'confirm',
+  },
 })
 </script>
 <template>
-  <div class="bg-[#5a4098] py-1 px-2 cursor-pointer rounded-md">
+  <div
+    :class="`py-1 px-2 cursor-pointer rounded-md ${
+      type === 'confirm' ? 'bg-blue-500 text-white' : ' bg-gray-500 text-blue-500'
+    }`"
+  >
     <slot name="left"></slot>
     <span>{{ title }}</span>
     <slot name="right"></slot>

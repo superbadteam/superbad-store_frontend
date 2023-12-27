@@ -76,6 +76,7 @@
         </div>
       </div>
     </div>
+    <ConfirmModal />
   </div>
 </template>
 <script setup>
@@ -86,6 +87,7 @@ import AButton from '@/components/commons/atoms/AButton.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import ThumbnailsProduct from '@/components/products/ThumbnailsProduct.vue'
 import ShopDetail from '@/components/profiles/ShopDetail.vue'
+import ConfirmModal from '@/components/commons/modal/ConfirmModal.vue'
 // services
 import { getProductApi } from '@/services/product.service'
 import { addToCartApi } from '@/services/cart.service'
