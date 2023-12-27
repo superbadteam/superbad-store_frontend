@@ -30,11 +30,12 @@
               <p class="text-base font-medium">Total</p>
               <p class="text-xl font-bold">${{ totalSubPrice }}</p>
             </div>
+            <p class="text-rose-600 px-5">{{ errValidate }}</p>
             <div class="p-5 pt-2">
               <AButton
                 title="checkout"
                 class="text-white text-lg font-medium flex justify-center py-3"
-                @click="modal.isShowConfirm = true"
+                @click="checkout"
               />
             </div>
           </div>
@@ -52,7 +53,9 @@
                   />
                   <img class="w-[80px] h-[80px] rounded-md" :src="item.productType.product.imageUrl" alt="" />
                   <div>
-                    <p class="font-medium text-base">{{ item.productType.product.name }}</p>
+                    <RouterLink :to="`/products/${item.productType.product.id}`" class="font-medium text-base">{{
+                      item.productType.product.name
+                    }}</RouterLink>
                     <p>{{ item.productType.name }}</p>
                     <!-- <ANumberInput @update:modelValue="onAddQuantity" v-model="item.quantity" /> -->
                   </div>
@@ -80,12 +83,6 @@
         </div>
       </div>
     </div>
-    <ConfirmModal
-      v-if="modal.isShowConfirm"
-      content="Are you sure want to checkout"
-      @close="modal.isShowConfirm = false"
-      @confirm="checkout"
-    />
   </div>
 </template>
 <script setup>
@@ -93,13 +90,13 @@ import { ref, onBeforeMount, computed } from 'vue'
 // components
 import AButton from '@/components/commons/atoms/AButton.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
-import ConfirmModal from '@/components/commons/modal/ConfirmModal.vue'
 // services
-import { getProductApi } from '@/services/product.service'
 import { orderApi } from '@/services/order.service'
 // stores
 import { useMasterStore } from '@/stores/master.store'
 const masterStore = useMasterStore()
+import { usePopupStore } from '@/stores/common.store'
+const popupStore = usePopupStore()
 
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
@@ -121,8 +118,11 @@ onBeforeMount(async () => {
   // shopDetail.value = await userStore.addUser(product.value.userId)
   listCheckout.value = masterStore.state.cart.items
 })
-const errValidate = ref({
-  cart: '',
+const errValidate = computed(() => {
+  if (selectItems.value.length === 0) {
+    return "You haven't selected any product"
+  }
+  return ''
 })
 
 const selectItems = ref([])
@@ -136,28 +136,28 @@ const totalSubPrice = computed(() => {
   return total
 })
 
-const modal = ref({
-  isShowConfirm: false,
-  content: '',
-  isProcessing: false,
-})
-
-const onAddQuantity = async (val) => {
-  console.log(val)
-}
-
 const checkout = async () => {
-  try {
-    const method = 'TakeFromCart'
-    const body = {
-      shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      cartItemIds: selectItems.value,
-    }
-    const res = await orderApi(body, method)
-  } catch (error) {
-    console.log(error)
-    router.push({ name: 'checkout-success', params: { id: route.params.id } })
+  if (errValidate.value) {
+    return
   }
+  popupStore.showPopup({
+    content: 'Do you want to checkout now?',
+    type: 'confirm',
+    isAsync: true,
+    onConfirm: async () => {
+      try {
+        const method = 'TakeFromCart'
+        const body = {
+          shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          cartItemIds: selectItems.value,
+        }
+        await orderApi(body, method)
+      } catch (error) {
+        console.log(error)
+        router.push({ name: 'checkout-success', params: { id: route.params.id } })
+      }
+    },
+  })
 }
 const listCheckout = ref([])
 </script>

@@ -34,7 +34,12 @@ const routes = [
   {
     path: '/checkout',
     name: 'checkout',
-    component: () => import('@/views/checkout/CheckoutView.vue'),
+    component: () => import('@/views/checkout/CheckoutFromCart.vue'),
+  },
+  {
+    path: '/checkout/:id',
+    name: 'checkout-direct',
+    component: () => import('@/views/checkout/CheckoutDirect.vue'),
   },
   {
     path: '/checkout-success/:id',
@@ -92,6 +97,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
+  },
 })
 
 export default router

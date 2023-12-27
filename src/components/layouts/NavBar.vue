@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useMasterStore } from '@/stores/master.store'
 import ModalProfile from '@/components/profiles/ModalProfile.vue'
-import SearchWrapper from '@/components/layouts/SearchModal/SearchWrapper.vue'
+import SearchWrapper from '@/components/search/SearchWrapper.vue'
 import CartModal from '../products/CartModal.vue'
 const authStore = useAuthStore().state
 const masterStore = useMasterStore().state
@@ -18,22 +18,24 @@ const closeModalCart = () => {
 }
 </script>
 <template>
-  <div class="fixed top-0 left-0 z-50 border-b-[1px] w-full h-[90px] bg-white gb-shadow flex flex-col">
+  <div class="fixed top-0 left-0 z-50 border-b-[1px] w-full bg-white gb-shadow flex flex-col">
     <!-- top line -->
-    <div class="h-[35px] w-full bg-[#f9f9f9] flex justify-between px-3 items-center">
-      <div>Call us: 094619309</div>
-      <div><strong>Sale 50%</strong> to day only when you apply code <strong>superbad.store</strong></div>
-      <div>About us | help</div>
+    <div class="max-md:h-[45px] h-[35px] w-full bg-[#f9f9f9] flex justify-between px-3 items-center">
+      <div class="max-md:hidden">Call us: 094619309</div>
+      <div class="text-center">
+        <strong>Sale 50%</strong> to day only when you apply code <strong>superbad.store</strong>
+      </div>
+      <div class="max-md:hidden">About us | help</div>
     </div>
     <!-- end top line -->
 
     <!-- bottom line -->
-    <div class="flex justify-between w-full items-center px-10" style="flex: 1 1 auto">
+    <div class="py-3 flex justify-between w-full items-center px-10" style="flex: 1 1 auto">
       <!-- flex-auto -->
       <RouterLink to="/" class="font-bold text-lg mr-5"
         >SUPERBAD.<span class="underlined underline-mask">STORE</span></RouterLink
       >
-      <SearchWrapper />
+      <SearchWrapper class="max-md:hidden" />
       <div class="flex">
         <div v-if="!authStore.isLoggedIn" class="flex gap-3">
           <router-link to="/login">
@@ -51,7 +53,7 @@ const closeModalCart = () => {
           <!-- tool left -->
           <router-link
             to="/dashboard/create-product"
-            class="border-[1px] bg-[#5a4098] text-white cursor-pointer hover:shadow-lg border-[#5a4098] py-1 px-2 rounded-md"
+            class="max-md:hidden border-[1px] bg-[#5a4098] text-white cursor-pointer hover:shadow-lg border-[#5a4098] py-1 px-2 rounded-md"
           >
             <i class="ri-add-line"></i>
             <span class="whitespace-nowrap">New post</span>

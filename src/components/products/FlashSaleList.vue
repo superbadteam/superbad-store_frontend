@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import { searchProductsApi } from '@/services/product.service';
 import 'swiper/css'
 const mySwiper = ref(null)
 
@@ -8,7 +9,15 @@ const onSwiper = (swiper) => {
   mySwiper.value = swiper
   console.log(swiper)
 }
-
+onBeforeMount(async () => {
+  try {
+    const res = await searchProductsApi()
+    products.value = res.data.data
+    console.log(res.data)
+  } catch (error) {
+    console.log(error)
+  }
+})
 import ProductCard from './ProductCard.vue'
 // render list product have properties: name, cost, image, discount, location, star, sold
 const products = ref([
@@ -116,7 +125,7 @@ const products = ref([
     <!-- title flash sale -->
     <div class="w-full flex justify-between p-4">
       <div class="flex">
-        <h2 class="text-xl font-bold">Flash sale</h2>
+        <h2 class="text-xl font-bold">Newest product</h2>
       </div>
       <div class="text-[#5a4098]">See more</div>
     </div>
@@ -143,7 +152,9 @@ const products = ref([
         @swiper="onSwiper"
       >
         <swiper-slide v-for="product in products" :key="product.name" style="width: auto" class="w-fit">
-          <ProductCard :product="product" />
+          <RouterLink :to="`/products/${product.id}`">
+            <ProductCard :product="product" />
+          </RouterLink>
         </swiper-slide>
       </swiper>
     </div>

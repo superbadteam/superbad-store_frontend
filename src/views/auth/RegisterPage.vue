@@ -79,8 +79,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { initAuthStore } from '@/stores'
 import { registerApi } from '@/services/auth.service'
-import { useNotification } from '@kyvg/vue3-notification'
-const notification = useNotification()
+// import { useNotification } from '@kyvg/vue3-notification'
+// const notification = useNotification()
 const router = useRouter()
 const email = ref('')
 const password = ref('')
