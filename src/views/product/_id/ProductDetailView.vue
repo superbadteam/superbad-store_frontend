@@ -8,6 +8,7 @@ import ShopDetail from '@/components/profiles/ShopDetail.vue'
 // services
 import { getProductApi } from '@/services/product.service'
 import { addToCartApi } from '@/services/cart.service'
+import { toast } from 'vue3-toastify'
 // stores
 import { useMasterStore } from '@/stores/master.store'
 import { useUserStore } from '@/stores/user.store'
@@ -106,7 +107,7 @@ const shopDetail = ref({
 
 onBeforeMount(async () => {
   await getProduct()
-  shopDetail.value = await userStore.addUser(product.value.userId)
+  // shopDetail.value = await userStore.addUser(product.value.userId)
 })
 const errValidate = ref({
   cart: '',
@@ -123,8 +124,10 @@ const addToCart = async () => {
     })
     masterStore.addToCart(res.data.items)
     errValidate.value.cart = ''
+    toast.success('Add to cart success')
   } catch (error) {
     console.log(error)
+    toast.error('Add to cart fail')
   }
 }
 

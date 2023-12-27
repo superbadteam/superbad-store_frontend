@@ -73,13 +73,7 @@ const openImage = () => {
       />
     </div>
 
-    <swiper
-      style="padding: 0 0px 10px 0px"
-      class="w-full pb-2"
-      :slides-per-view="'auto'"
-      :space-between="10"
-      @swiper="onSwiper"
-    >
+    <swiper style="padding: 0 0px 10px 0px" class="w-full pb-2" :slides-per-view="'auto'" :space-between="10">
       <swiper-slide v-for="(thumb, index) in listImages" :key="thumb.id" style="width: auto" class="w-fit">
         <div
           class="hover:border-gray-700 border-[2px] border-transparent overflow-hidden cursor-zoom-in w-[80px] h-[80px] rounded-md"

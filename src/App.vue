@@ -11,7 +11,6 @@ const layout = computed(() => {
 })
 </script>
 <template>
-  <Notifications />
   <component :is="layout">
     <router-view />
   </component>
