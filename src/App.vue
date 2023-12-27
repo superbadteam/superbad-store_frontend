@@ -1,6 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
+import ConfirmModal from './components/commons/modal/ConfirmModal.vue'
+
 const route = useRoute()
 const layoutMeta = computed(() => {
   return route.meta.layout
@@ -13,6 +15,7 @@ const layout = computed(() => {
 <template>
   <component :is="layout">
     <router-view />
+    <ConfirmModal />
   </component>
 </template>
 

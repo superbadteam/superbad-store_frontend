@@ -79,7 +79,12 @@
           >
             <i class="ri-shopping-cart-2-line"></i> Add to cart
           </div>
-          <div class="text-white bg-third-100 py-3 flex gap-3 justify-center rounded-md mt-4">Buy now</div>
+          <div
+            class="cursor-pointer text-white bg-third-100 py-3 flex gap-3 justify-center rounded-md mt-4"
+            @click="buyNow"
+          >
+            Buy now
+          </div>
           <div class="flex justify-center mt-4 items-center gap-5 font-medium">
             <p><i class="ri-heart-line"></i> Wish list</p>
             <div class="w-[1px] h-7 bg-slate-200"></div>
@@ -110,12 +115,13 @@ import { addToCartApi } from '@/services/cart.service'
 import { toast } from 'vue3-toastify'
 // stores
 import { useMasterStore } from '@/stores/master.store'
-import { useUserStore } from '@/stores/user.store'
 const masterStore = useMasterStore()
-const userStore = useUserStore()
 
-import { useRoute } from 'vue-router'
+import { usePopupStore } from '@/stores/common.store'
+const popupStore = usePopupStore()
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
+const router = useRouter()
 // breadcrumb
 const routes = ref([
   {
@@ -186,7 +192,6 @@ const chooseType = (type) => {
     return
   }
   typeSelected.value = type
-  errValidate.value.cart = ''
 }
 
 const cart = ref({
@@ -206,15 +211,27 @@ const shopDetail = ref({
 
 onBeforeMount(async () => {
   await getProduct()
-  // shopDetail.value = await userStore.addUser(product.value.userId)
 })
-const errValidate = ref({
-  cart: '',
+
+const errValidate = computed(() => {
+  if (cart.value.quantity > typeSelected.value?.quantity) {
+    return {
+      cart: 'Quantity must be less than quantity in stock',
+    }
+  }
+  if (!typeSelected.value) {
+    return {
+      cart: 'Please choose type',
+    }
+  }
+  return {
+    cart: '',
+  }
 })
+
 const addToCart = async () => {
   try {
     if (!typeSelected.value) {
-      errValidate.value.cart = 'Please choose type'
       return
     }
     const res = await addToCartApi({
@@ -222,11 +239,24 @@ const addToCart = async () => {
       quantity: cart.value.quantity,
     })
     masterStore.addToCart(res.data.items)
-    errValidate.value.cart = ''
     toast.success('Add to cart success')
   } catch (error) {
     console.log(error)
     toast.error('Add to cart fail')
   }
+}
+
+const buyNow = () => {
+  if (!typeSelected.value) {
+    return
+  }
+  popupStore.showPopup({
+    content: 'Do you want to checkout now?',
+    type: 'confirm',
+    onConfirm: () => {
+      console.log('confirm')
+      router.push({ name: 'checkout-direct', query: { typeId: typeSelected.value.id, quantity: cart.value.quantity } })
+    },
+  })
 }
 </script>
