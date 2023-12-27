@@ -1,6 +1,6 @@
 import axiosApiInstance from '@/plugins/api'
 const BASE_INVENTORY_ENDPOINT = '/inventory'
-const BASE_SALES_ENDPOINT = '/sales'
+const BASE_SALES_ENDPOINT = '/shopping'
 
 export const uploadApi = async (formData) => {
   return await axiosApiInstance.post('/shared/uploads/images', formData)

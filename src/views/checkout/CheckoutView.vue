@@ -31,11 +31,15 @@
               <p class="text-xl font-bold">${{ totalSubPrice }}</p>
             </div>
             <div class="p-5 pt-2">
-              <AButton title="checkout" class="text-white text-lg font-medium flex justify-center py-3" />
+              <AButton
+                title="checkout"
+                class="text-white text-lg font-medium flex justify-center py-3"
+                @click="modal.isShowConfirm = true"
+              />
             </div>
           </div>
           <div class="flex-auto flex flex-col gap-7">
-            <div v-for="item in masterStore.state.cart.items" :key="item.id">
+            <div v-for="item in listCheckout" :key="item.id">
               <div>
                 <div class="flex gap-4">
                   <input
@@ -50,9 +54,9 @@
                   <div>
                     <p class="font-medium text-base">{{ item.productType.product.name }}</p>
                     <p>{{ item.productType.name }}</p>
-                    <ANumberInput v-model="item.quantity" />
+                    <!-- <ANumberInput @update:modelValue="onAddQuantity" v-model="item.quantity" /> -->
                   </div>
-                  <p class="ml-auto text-base font-semibold">${{ item.totalPrice }}</p>
+                  <p class="ml-auto text-base font-semibold">${{ item.productType.price * item.quantity }}</p>
                 </div>
                 <div class="flex justify-between items-center mt-3 pl-7">
                   <p class="text-third-100 font-medium">
@@ -76,29 +80,30 @@
         </div>
       </div>
     </div>
-    <ConfirmModal />
+    <ConfirmModal
+      v-if="modal.isShowConfirm"
+      content="Are you sure want to checkout"
+      @close="modal.isShowConfirm = false"
+      @confirm="checkout"
+    />
   </div>
 </template>
 <script setup>
 import { ref, onBeforeMount, computed } from 'vue'
 // components
-import ANumberInput from '@/components/commons/atoms/ANumberInput.vue'
 import AButton from '@/components/commons/atoms/AButton.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
-import ThumbnailsProduct from '@/components/products/ThumbnailsProduct.vue'
-import ShopDetail from '@/components/profiles/ShopDetail.vue'
 import ConfirmModal from '@/components/commons/modal/ConfirmModal.vue'
 // services
 import { getProductApi } from '@/services/product.service'
-import { addToCartApi } from '@/services/cart.service'
+import { orderApi } from '@/services/order.service'
 // stores
 import { useMasterStore } from '@/stores/master.store'
-import { useUserStore } from '@/stores/user.store'
 const masterStore = useMasterStore()
-const userStore = useUserStore()
 
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
+const router = useRouter()
 // breadcrumb
 const routes = ref([
   {
@@ -111,65 +116,10 @@ const routes = ref([
   },
 ])
 
-const product = ref({
-  id: '',
-  name: '',
-  userId: '',
-  description: '',
-  categoryId: '',
-  sold: 0,
-  condition: '',
-  types: [],
-  images: [],
-})
-
-const typeSelected = ref(null)
-
-const priceComputed = computed(() => {
-  return typeSelected.value
-    ? {
-        price: typeSelected.value.price,
-      }
-    : {
-        min: product.value.types[0]?.price,
-        max: product.value.types[product.value.types.length - 1]?.price,
-      }
-})
-
-const getProduct = async () => {
-  const res = await getProductApi(route.params.id)
-  product.value = res.data
-  console.log(product.value)
-
-  let routeSubCategory = {}
-  const routeCategory = masterStore.state.categories.find((category) =>
-    category.subCategories.find((subCategory) => {
-      if (subCategory.id === product.value.categoryId) {
-        routeSubCategory = subCategory
-        return true
-      }
-      return false
-    })
-  )
-  routes.value.push(
-    {
-      name: routeCategory.name,
-      path: `/category/${routeCategory.id}`,
-    },
-    {
-      name: routeSubCategory.name,
-      path: `/category/${routeCategory.id}/sub-category/${routeSubCategory.id}`,
-    },
-    {
-      name: product.value.name,
-      path: `/product/${product.value.id}`,
-    }
-  )
-}
-
 onBeforeMount(async () => {
   // await getProduct()
   // shopDetail.value = await userStore.addUser(product.value.userId)
+  listCheckout.value = masterStore.state.cart.items
 })
 const errValidate = ref({
   cart: '',
@@ -178,11 +128,37 @@ const errValidate = ref({
 const selectItems = ref([])
 const totalSubPrice = computed(() => {
   let total = 0
+  // selectItems is array of id
   selectItems.value.forEach((item) => {
-    const product = masterStore.state.cart.items.find((product) => product.id === item)
-    total += product.totalPrice
+    const product = listCheckout.value.find((product) => product.id === item)
+    total += product.productType.price * product.quantity
   })
   return total
 })
+
+const modal = ref({
+  isShowConfirm: false,
+  content: '',
+  isProcessing: false,
+})
+
+const onAddQuantity = async (val) => {
+  console.log(val)
+}
+
+const checkout = async () => {
+  try {
+    const method = 'TakeFromCart'
+    const body = {
+      shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      cartItemIds: selectItems.value,
+    }
+    const res = await orderApi(body, method)
+  } catch (error) {
+    console.log(error)
+    router.push({ name: 'checkout-success', params: { id: route.params.id } })
+  }
+}
+const listCheckout = ref([])
 </script>
 <style scoped></style>
