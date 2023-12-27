@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { refreshAccessToken } from '@/services/auth.service'
-import { notify } from '@kyvg/vue3-notification'
 
 const excludeUrls = ['/auth/login', '/auth/refresh-tokens', '/shopping/users/me/cart']
 const axiosApiInstance = axios.create()
@@ -43,11 +42,6 @@ axiosApiInstance.interceptors.response.use(
         return axiosApiInstance(originalRequest)
       } catch (error) {
         console.log(error, 'ERROR', originalRequest.url)
-        notify({
-          type: 'error',
-          title: 'Authorization',
-          text: 'Bạn đã hết phiên đăng nhập, vui lòng đăng nhập lại!',
-        })
         localStorage.clear()
         window.location.href = '/login'
       }

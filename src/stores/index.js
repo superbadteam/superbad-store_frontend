@@ -16,7 +16,9 @@ export const initAuthStore = async () => {
 
 export const initMasterStore = async () => {
   const masterStore = useMasterStore()
-  Promise.all([masterStore.initCategories(), masterStore.initCart()]).then(() => {
-    console.log('initMasterStore', masterStore)
-  })
+  try {
+    await Promise.all([masterStore.initCategories(), masterStore.initCart()])
+  } catch (error) {
+    console.log(error)
+  }
 }

@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@hennge/vue3-pagination": "^1.0.17",
-    "@kyvg/vue3-notification": "^3.0.2",
     "@vue-hero-icons/outline": "^1.7.2",
     "apexcharts": "^3.37.1",
     "axios": "^1.5.0",
@@ -23,7 +22,8 @@
     "vue": "^3.3.4",
     "vue-cropperjs": "^5.0.0",
     "vue-filepond": "^7.0.4",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-toastify": "^0.2.1"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.7.12",
