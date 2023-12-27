@@ -11,7 +11,7 @@
     </div>
     <div class="border-b-[1px] w-full"></div>
     <!-- main -->
-    <div class="w-full max-w-[1440px] mt-10 pb-10 flex gap-10">
+    <div class="w-full max-w-[1440px] mt-10 pb-10 flex gap-10 lg:px-5">
       <!-- filter -->
       <div class="w-[300px] min-w-[300px]">
         <FilterBox v-model="filter" />
@@ -20,22 +20,48 @@
       <div class="flex-auto">
         <div class="flex justify-between items-center">
           <p class="text-lg font-bold">
-            Showing 100 results for:
+            Showing {{ products.length }} results for:
             <span class="font-medium">{{ keyword }}</span>
           </p>
           <div class="flex gap-5">
             <div class="flex items-center gap-2">
-              <p class="text-lg font-bold">Sort by</p>
-              <i class="ri-arrow-down-s-line"></i>
+              <!-- select box sort by-->
+              <div class="relative">
+                <select class="border-[1px] border-third-200 rounded-md px-3 py-1 text-sm font-medium text-third-200">
+                  <option value="">Sort by</option>
+                  <option value="CreatedAt">Created at</option>
+                  <option value="Price">Price</option>
+                  <option value="TotalReviews">Total reviews</option>
+                  <option value="Rating">Rating</option>
+                  <option value="Sold">Sold</option>
+                </select>
+                <i class="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2"></i>
+              </div>
             </div>
             <div class="flex items-center gap-2">
-              <p class="text-lg font-bold">View</p>
-              <i class="ri-arrow-down-s-line"></i>
+              <div class="relative">
+                <select class="border-[1px] px-5 border-third-200 rounded-md py-1 text-sm font-medium text-third-200">
+                  <option value="">Accending</option>
+                  <option value="true">Descending</option>
+                </select>
+                <i class="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2"></i>
+              </div>
             </div>
           </div>
         </div>
         <div class="flex flex-wrap gap-5 mt-5">
-          <ProductCard v-for="product in products" :key="product.name" :product="product" />
+          <router-link v-for="product in products" :key="product.name" :to="`/products/${product.id}`">
+            <ProductCard :product="product" />
+          </router-link>
+        </div>
+        <div class="mt-5">
+          <v-pagination
+            v-model="meta.pageIndex"
+            :pages="meta.totalPages"
+            :range-size="1"
+            active-color="#DCEDFF"
+            @update:model-value="updateHandler"
+          />
         </div>
       </div>
     </div>
@@ -45,25 +71,33 @@
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import FilterBox from '@/components/search/FilterBox.vue'
 import ProductCard from '@/components/products/ProductCard.vue'
+import VPagination from '@hennge/vue3-pagination'
+import '@hennge/vue3-pagination/dist/vue3-pagination.css'
 import { onBeforeMount, ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { searchProductsApi } from '@/services/product.service'
 const route = useRoute()
 const routeQuery = computed(() => route.query)
 
 watch(routeQuery, (value) => {
   keyword.value = value.keyword
   filter.value.category = value.category
+  handleRoute()
 })
+
 onBeforeMount(() => {
   console.log('search')
   filter.value.category = routeQuery.value.category
   keyword.value = routeQuery.value.keyword
+  handleRoute()
 })
+
 const keyword = ref('')
 const filter = ref({
   category: [],
   subcategory: '',
 })
+
 const routes = ref([
   {
     name: 'Home',
@@ -78,6 +112,7 @@ const routes = ref([
     path: '/search',
   },
 ])
+
 const products = ref([
   {
     name: 'Long Product Name 1 You Might Forget the BeginningYou Might Forget the Beginning',
@@ -177,4 +212,19 @@ const products = ref([
     sold: 80,
   },
 ])
+const meta = ref({
+  pageIndex: 1,
+  totalPages: 1,
+})
+
+const searchParams = ref('')
+const handleRoute = async () => {
+  const { category, keyword } = routeQuery.value
+  const Cate = category && Array.isArray(category) ? category.join(',') : category ? category : ''
+  searchParams.value = `Category=${Cate}&Keyword=${keyword}`
+  console.log('Cate', Cate)
+  const res = await searchProductsApi(searchParams.value)
+  console.log('data', res)
+  products.value = res.data.data
+}
 </script>

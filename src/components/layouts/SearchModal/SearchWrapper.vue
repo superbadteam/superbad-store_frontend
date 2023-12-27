@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[900px] h-[35px] border-[1px] flex rounded-md">
+  <div class="w-[80%] lg:w-[500px] h-[35px] border-[1px] flex rounded-md">
     <input
       v-model="keyword"
       type="text"
