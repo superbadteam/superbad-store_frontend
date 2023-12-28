@@ -1,12 +1,16 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, computed } from 'vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import AButton from '@/components/commons/atoms/AButton.vue'
+import ADropdown from '@/components/commons/atoms/ADropdown.vue'
 import ModalChangeAvatar from '@/components/profiles/ModalChangeAvatar.vue'
 import AInput from '@/components/commons/atoms/AInput.vue'
+import AddShippingAddress from '@/components/profiles/AddShippingAddress.vue'
 import { fileToBase64 } from '@/utils/file'
 import { useAuthStore } from '@/stores/auth.store'
 const authStore = useAuthStore().state
+// services
+import { getLocationApi, getShippingAddressApi } from '@/services/order.service'
 defineProps({
   type: {
     type: String,
@@ -24,11 +28,36 @@ const routes = ref([
     path: '/',
   },
 ])
-
+const locations = ref([])
 const userData = ref(null)
 onBeforeMount(() => {
+  getLocation()
+  getShippingAddress()
   console.log('authStore', authStore)
   userData.value = { ...authStore?.user }
+})
+
+const getLocation = async () => {
+  const res = await getLocationApi()
+  locations.value = res.data
+  console.log('locations', locations.value)
+}
+
+const cities = computed(() => {
+  return locations.value.map((location) => ({
+    id: location.id,
+    name: location.name,
+    code: location.code,
+  }))
+})
+
+const districts = computed(() => {
+  const city = locations.value.find((location) => location.id === userData.value.cityId)
+  return city?.districts.map((district) => ({
+    id: district.id,
+    name: district.name,
+    code: district.code,
+  }))
 })
 const modal = ref({
   changeAvatar: false,
@@ -51,6 +80,25 @@ const onUpdateAvatar = (file) => {
   authStore.user.avatar = file
   modal.value.changeAvatar = false
 }
+
+// handle shipping address
+const shippingAddress = ref([])
+const getShippingAddress = async () => {
+  try {
+    const res = await getShippingAddressApi()
+    shippingAddress.value = res.data.reverse()
+    console.log('shippingAddress', shippingAddress.value)
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
+const onAddNewShippingAddress = (val) => {
+  shippingAddress.value.unshift(val)
+  isShowAddShippingAddress.value = false
+  console.log('onAddNewShippingAddress')
+}
+const isShowAddShippingAddress = ref(false)
 </script>
 
 <template>
@@ -60,14 +108,16 @@ const onUpdateAvatar = (file) => {
     @cropped="onUpdateAvatar"
     @close="modal.changeAvatar = false"
   />
-  <div class="relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
-    <header class="flex gap-2 justify-between w-full pb-5">
+  <div class="max-lg:p-5 relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
+    <header class="max-lg:flex-col flex gap-2 justify-between w-full pb-5">
+      <!-- breadcrumb -->
       <div>
         <h1 class="text-2xl font-semibold">Profile settings</h1>
         <BreadCrumb :routes="routes" />
       </div>
+      <!-- action -->
       <div class="flex gap-2 sticky top-0">
-        <AButton title="Cancel" class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200" @click="onCreate">
+        <AButton title="Cancel" type="close" class="w-fit h-fit py-2 px-3 bg-slate-200 text-gray-700" @click="onCreate">
           <template #left>
             <i class="ri-close-line"></i>
           </template>
@@ -79,6 +129,7 @@ const onUpdateAvatar = (file) => {
         </AButton>
       </div>
     </header>
+    <!-- avatar, bg -->
     <div>
       <div class="relative">
         <!-- cover -->
@@ -120,14 +171,76 @@ const onUpdateAvatar = (file) => {
       </div>
     </div>
     <!-- information -->
-    <div class="w-full flex gap-5 mt-10">
-      <div class="w-[300px] bg-white h-[300px] rounded-2xl"></div>
+    <div class="max-lg:flex-col w-full flex lg:flex-row-reverse gap-5 mt-10">
+      <!-- position for shipping -->
+      <div class="max-lg:w-full max-lg:min-w-[unset] w-[300px] min-w-[400px] bg-white rounded-2xl p-5">
+        <div class="flex justify-between items-center">
+          <p class="text-lg font-semibold">Shipping address</p>
+          <div
+            class="w-10 h-10 rounded-full cursor-pointer flex justify-center items-center hover:bg-slate-200"
+            @click="isShowAddShippingAddress = !isShowAddShippingAddress"
+          >
+            <i class="ri-add-fill text-xl"></i>
+          </div>
+        </div>
+        <div class="w-full flex flex-col mt-4 gap-3">
+          <AddShippingAddress
+            v-if="isShowAddShippingAddress"
+            :locations="locations"
+            @added="onAddNewShippingAddress"
+            @close="isShowAddShippingAddress = false"
+          />
+          <!-- shipping address item -->
+          <div v-for="item in shippingAddress" :key="item.id" class="w-full border-[1px] rounded-lg p-4">
+            <div class="flex w-full justify-between">
+              <p class="font-semibold text-primary-200">{{ item.isMainAddress ? 'Default' : '' }}</p>
+              <div>
+                <i class="ri-more-fill"></i>
+              </div>
+            </div>
+            <div class="mt-2">
+              <p class="text-base flex items-center gap-2 font-medium">
+                <i class="ri-map-pin-2-fill text-xl text-secondary-100"></i> {{ [item.city, item.district].join(', ') }}
+              </p>
+              <p class="text-base mt-2 flex items-center gap-2 font-medium">
+                <i class="ri-user-fill text-xl text-secondary-100"></i> {{ item.name }}
+              </p>
+              <p class="text-base mt-2 flex items-center gap-2 font-medium">
+                <i class="ri-phone-fill text-xl text-secondary-100"></i> {{ item.phoneNumber }}
+              </p>
+            </div>
+          </div>
+          <!--end shipping address item -->
+        </div>
+      </div>
+      <!-- information -->
       <div class="flex-auto bg-white rounded-2xl p-5 flex flex-col gap-5">
-        <h2 class="text-base font-semibold">Information</h2>
+        <h2 class="text-lg font-semibold">Information</h2>
         <AInput v-model="userData.name" label="Full name" placeholder="Enter your full name..." />
         <AInput v-model="userData.email" label="Email" placeholder="Enter your email..." />
         <AInput v-model="userData.phoneNumber" label="Phone number" placeholder="Enter your phone number..." />
-        <AInput label="Address" placeholder="Enter your address..." />
+        <div class="w-full flex gap-5">
+          <ADropdown
+            v-if="cities"
+            v-model="userData.cityId"
+            class="w-full h-full"
+            is-required="true"
+            label="City"
+            :options="cities"
+            placeholder="Select category..."
+            required
+          />
+          <ADropdown
+            v-model="userData.districtId"
+            class="w-full h-full"
+            is-required="true"
+            label="District"
+            :options="districts"
+            placeholder="Select category..."
+            required
+          />
+        </div>
+        <AInput label="Address detail" placeholder="Enter your address..." />
       </div>
     </div>
   </div>

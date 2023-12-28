@@ -1,7 +1,7 @@
 // refactor user store
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getUserApi } from '@/services/user.service'
+import { getShopDetailApi } from '@/services/user.service'
 
 export const useUserStore = defineStore('user', () => {
   const state = ref({
@@ -12,14 +12,17 @@ export const useUserStore = defineStore('user', () => {
     state.value.users = data
   }
 
-  const addUser = async (id) => {
-    const { data } = await getUserApi(id)
+  const getUser = async (id) => {
+    const user = state.value.users.find((user) => user.id === id)
+    if (user) return user
+    const { data } = await getShopDetailApi(id)
     state.value.users.push(data)
+    return data
   }
 
   return {
     state,
     setUsers,
-    addUser,
+    getUser,
   }
 })

@@ -20,12 +20,12 @@ const handleCrop = () => {
 
     const formData = new FormData()
 
-    formData.append('file', file)
+    formData.append('images', file)
 
     uploadApi(formData)
       .then((res) => {
         console.log(res)
-        emits('cropped', res.data.data)
+        emits('cropped', res.data.urls[0])
       })
       .catch((err) => {
         console.log(err)

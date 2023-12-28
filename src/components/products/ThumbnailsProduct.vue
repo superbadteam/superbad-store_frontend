@@ -61,12 +61,12 @@ const openImage = () => {
 <template>
   <div class="max-md:w-full max-md:min-w-[unset] w-[350px] min-w-[350px]">
     <div id="images" class="w-full bg-slate-300 h-[380px] overflow-hidden rounded-md mb-2">
-      <img
+      <LazyImg
         v-for="(thumb, index) in listImages"
         v-show="(!currentImageSelected && index === 0) || currentImageSelected?.id === thumb.id"
         :id="thumb.id"
         :key="thumb.id"
-        class="w-full h-full object-cover cursor-zoom-in"
+        class-style="w-full h-full object-cover cursor-zoom-in"
         :src="thumb.url"
         alt=""
         @click="openImage"
@@ -79,7 +79,7 @@ const openImage = () => {
           class="hover:border-gray-700 border-[2px] border-transparent overflow-hidden cursor-zoom-in w-[80px] h-[80px] rounded-md"
           @mouseover="hoverOnChange(index)"
         >
-          <img class="w-full h-full object-cover" :src="thumb.url" alt="" />
+          <LazyImg class-style="w-full h-full object-cover" :src="thumb.url" alt="" />
         </div>
       </swiper-slide>
     </swiper>

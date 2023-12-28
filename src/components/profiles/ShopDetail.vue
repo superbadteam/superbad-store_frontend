@@ -7,7 +7,7 @@
         alt=""
       />
       <div class="flex flex-col justify-center">
-        <p class="text-lg font-bold">Rombo shop</p>
+        <p class="text-lg font-bold">{{ shop.name }}</p>
         <p class="font-medium">Rombo shop</p>
       </div>
     </div>
@@ -19,3 +19,11 @@
     <div></div>
   </div>
 </template>
+<script setup>
+defineProps({
+  shop: {
+    type: Object,
+    required: true,
+  },
+})
+</script>

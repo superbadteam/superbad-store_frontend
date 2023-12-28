@@ -1,8 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
-import AButton from '@/components/commons/atoms/AButton.vue'
-import ProductCard from '@/components/products/ProductCard.vue'
 import { useAuthStore } from '@/stores/auth.store'
 // services
 import { getMyProductsApi } from '@/services/product.service'
@@ -15,8 +13,8 @@ const routes = ref([
     path: '/',
   },
   {
-    name: 'Profile setting',
-    path: '/',
+    name: 'My products',
+    path: '/dashboard/manage-product',
   },
 ])
 
@@ -36,29 +34,37 @@ const getMyProducts = async () => {
 </script>
 
 <template>
-  <div class="relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
+  <div class="relative flex flex-col w-full h-full p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
     <header class="flex gap-2 justify-between w-full pb-5">
       <div>
-        <h1 class="text-2xl font-semibold">Profile settings</h1>
+        <h1 class="text-2xl font-semibold">My products</h1>
         <BreadCrumb :routes="routes" />
       </div>
-      <div class="flex gap-2 sticky top-0">
-        <AButton title="Cancel" class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200" @click="onCreate">
-          <template #left>
-            <i class="ri-close-line"></i>
-          </template>
-        </AButton>
-        <AButton title="Create" class="w-fit h-fit py-2 px-3 text-white bg-blue-500" @click="onCreate">
-          <template #left>
-            <i class="ri-save-line"></i>
-          </template>
-        </AButton>
-      </div>
+      <div class="flex gap-2 sticky top-0"></div>
     </header>
     <div class="w-full flex gap-5">
-      <RouterLink :to="`/products/${product.id}`" v-for="product in products" :key="product.id" >
-        <ProductCard :product="product" />
-      </RouterLink>
+      <div class="relative w-full overflow-x-auto">
+        <table class="w-full text-sm text-left rtl:text-right">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+            <tr>
+              <th scope="col" class="px-6 py-3">Product name</th>
+              <th scope="col" class="px-6 py-3">Sold</th>
+              <th scope="col" class="px-6 py-3">Category</th>
+              <th scope="col" class="px-6 py-3">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in products" :key="product.id" class="bg-white border-b">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                {{ product.name }}
+              </th>
+              <td class="px-6 py-4">{{ product.sold }}</td>
+              <td class="px-6 py-4">Laptop</td>
+              <td class="px-6 py-4">$2999</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

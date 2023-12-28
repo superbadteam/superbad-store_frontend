@@ -114,13 +114,13 @@ import { toast } from 'vue3-toastify'
 // stores
 import { useMasterStore } from '@/stores/master.store'
 const masterStore = useMasterStore()
-import { useAuthStore } from '@/stores/auth.store'
-const authStore = useAuthStore()
 import { usePopupStore } from '@/stores/common.store'
 const popupStore = usePopupStore()
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
+import { useUserStore } from '@/stores/user.store'
+const userStore = useUserStore()
 // breadcrumb
 const routes = ref([
   {
@@ -210,7 +210,12 @@ const shopDetail = ref({
 
 onBeforeMount(async () => {
   await getProduct()
+  await getUser()
 })
+const getUser = async () => {
+  const res = await userStore.getUser(product.value.userId)
+  shopDetail.value = res
+}
 
 const errValidate = computed(() => {
   if (cart.value.quantity > typeSelected.value?.quantity) {
