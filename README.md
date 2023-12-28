@@ -30,7 +30,7 @@ To run tests, run the following command
   yarn dev
 ```
 
-
+donate me for LTS (Long time support :) )
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
