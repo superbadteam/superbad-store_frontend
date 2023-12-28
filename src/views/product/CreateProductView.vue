@@ -79,7 +79,7 @@ const newProduct = ref({
   name: '',
   description: '',
   categoryId: '',
-  condition: 'new',
+  condition: '',
   types: [],
   images: [],
   parentCategory: '',
@@ -109,7 +109,7 @@ const totalImageUploaded = ref({
     </template>
   </AFullLoading>
   <!-- <div class="flex w-full px-5 pt-7 pb-10 justify-center gap-5"> -->
-  <div class="relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
+  <div class="max-lg:p-5 max-md:pt-10 relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
     <!-- <div class="absolute backdrop-blur w-full h-full flex justify-center top-0 left-0 z-10 pt-14">
       <div class="p-7 h-fit bg-white gb-shadow rounded-3xl flex flex-col justify-center items-center">
         <p class="text-lg font-semibold">Please confirm your email to create product</p>
@@ -124,13 +124,18 @@ const totalImageUploaded = ref({
       </div>
     </div> -->
     <!-- header -->
-    <header class="flex gap-2 justify-between w-full border-b-2 pb-5">
+    <header class="max-md:flex-col flex gap-2 justify-between w-full border-b-2 pb-5">
       <div>
         <h1 class="text-2xl font-semibold">Create new product</h1>
         <BreadCrumb :routes="routes" />
       </div>
       <div class="flex gap-2">
-        <AButton title="Cancel" class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200" @click="onCreate">
+        <AButton
+          title="Cancel"
+          type="cancel"
+          class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
+          @click="onCreate"
+        >
           <template #left>
             <i class="ri-close-line"></i>
           </template>
@@ -143,9 +148,9 @@ const totalImageUploaded = ref({
       </div>
     </header>
     <!-- body -->
-    <div class="flex w-full mt-5 gap-10 h-min">
+    <div class="max-lg:flex-col flex w-full mt-5 gap-10 h-min">
       <!-- information -->
-      <div class="flex-1 h-full bg-white p-7 rounded-2xl">
+      <div class="max-md:px-4 flex-1 h-full bg-white p-7 border-[1px] rounded-2xl">
         <p class="text-lg font-medium mb-2">
           Basic information
           <span>
@@ -157,7 +162,7 @@ const totalImageUploaded = ref({
           <div class="w-full">
             <AInput v-model="newProduct.name" is-required="true" label="Product name" placeholder="Enter name..." />
           </div>
-          <div class="flex gap-2">
+          <div class="max-lg:flex-wrap flex gap-2">
             <ADropdown
               v-model="newProduct.parentCategory"
               class="w-full h-full"
@@ -176,11 +181,17 @@ const totalImageUploaded = ref({
               placeholder="Select subcategory..."
               required
             />
-            <AInput
+            <ADropdown
               v-model="newProduct.condition"
+              class="w-full h-full"
               is-required="true"
               label="Condition"
-              placeholder="Enter condition..."
+              :options="[
+                { name: 'New', value: 'new' },
+                { name: 'Like new', value: 'Likenew' },
+              ]"
+              placeholder="Select condition..."
+              required
             />
           </div>
         </div>
@@ -193,20 +204,12 @@ const totalImageUploaded = ref({
             </div>
           </div>
         </div>
-        <div class="flex-auto mt-5">
-          <p class="font-semibold mb-3">Condition:</p>
-          <input
-            value="3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            class="w-full rounded-md border-[1px] border-[#ebebeb]"
-            type="text"
-          />
-        </div>
         <!-- image by type -->
         <ImageByTypePicker v-model="newProduct.types" />
       </div>
       <!-- end upload -->
       <!-- image upload -->
-      <div class="flex-1 bg-white p-3 rounded-xl">
+      <div class="flex-1 bg-white p-3 rounded-xl border-[1px]">
         <div class="min-h-[715px] h-full overflow-y-auto p-5 shadow-sm">
           <p class="text-lg font-medium">Image upload</p>
           <div class="w-full h-[500px] mt-2">
