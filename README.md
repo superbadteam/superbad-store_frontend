@@ -12,7 +12,7 @@
 
 ## Screenshots
 
-![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/7092e3f7-baed-4e16-ae2c-f86090f09b5b)
+![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/d33af85e-36d1-445a-9f51-c68c7531914b)
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/71720b65-2765-4f4e-9d96-f175f699e90f)
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/5fc2b7ed-a38e-468a-8186-0fca2dc43dfb)
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/3b282c7b-fb31-4bdd-a17e-32fd11a3b287)
