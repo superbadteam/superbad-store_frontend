@@ -12,7 +12,7 @@ defineProps({
 </script>
 <template>
   <div :class="`flex flex-col h-[330px] overflow-hidden product-card-shadow bg-white rounded-xl ${width}`">
-    <img class="h-[180px] object-cover w-full" :src="product.imageUrl" alt="" />
+    <LazyImg class-style="h-[180px] object-cover w-full" :src="product.imageUrl" alt="" />
     <div class="flex-auto p-3">
       <p class="text-sm font-semibold text-[#363636] truncate-2">{{ product.name }}</p>
       <p v-if="product.cost" class="mt-1 font-bold text-lg">${{ product.cost }}</p>
