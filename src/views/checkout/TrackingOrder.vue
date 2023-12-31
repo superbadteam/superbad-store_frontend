@@ -22,7 +22,7 @@
       <!-- processing -->
       <div v-if="tracking" class="w-full rounded-md overflow-hidden flex flex-col gap-2 mt-5 border-[1px] p-5">
         <div v-for="(item, index) in tracking" :key="item.id" class="flex min-h-[80px]">
-          <div class="w-[200px]">
+          <div class="w-[200px] min-w-[200px]">
             {{
               new Date(item.createdAt).toLocaleDateString('en-GB', {
                 day: 'numeric',

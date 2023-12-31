@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 const props = defineProps({
   label: {
     type: String,
@@ -44,4 +44,8 @@ const props = defineProps({
 })
 defineEmits(['update:modelValue'])
 const value = ref(props.modelValue)
+onBeforeMount(() => {
+  value.value = props.modelValue
+  console.log("----------->",value.value)
+})
 </script>

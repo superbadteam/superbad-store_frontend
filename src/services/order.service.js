@@ -15,6 +15,10 @@ export const getTrackingApi = async (id) => {
   return await axiosApiInstance.get(`https://658c0196859b3491d3f54467.mockapi.io/tracking-order?code=${id}`)
 }
 
+export const addTrackingApi = async (data) => {
+  return await axiosApiInstance.post(`https://658c0196859b3491d3f54467.mockapi.io/tracking-order`, data)
+}
+
 export const getLocationApi = async () => {
   return await axiosApiInstance.get(`${BASE_ENDPOINT_ORDERS}/locations`)
 }

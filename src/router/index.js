@@ -72,7 +72,13 @@ const routes = [
         path: 'create-product',
         name: 'create-product',
         meta: { requiresAuth: true },
-        component: () => import('@/views/product/CreateProductView.vue'),
+        component: () => import('@/views/dashboard/CreateProductView.vue'),
+      },
+      {
+        path: 'update-product/:id',
+        name: 'update-product',
+        meta: { requiresAuth: true },
+        component: () => import('@/views/dashboard/UpdateProductView.vue'),
       },
       {
         path: 'manage-product',

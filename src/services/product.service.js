@@ -10,6 +10,10 @@ export const createProductApi = async (data) => {
   return await axiosApiInstance.post(`${BASE_INVENTORY_ENDPOINT}/products`, data)
 }
 
+export const updateProductApi = async (id, data) => {
+  return await axiosApiInstance.put(`${BASE_INVENTORY_ENDPOINT}/products/${id}`, data)
+}
+
 export const getProductsApi = async (params) => {
   return await axiosApiInstance.get(`${BASE_INVENTORY_ENDPOINT}/products`, { params })
 }
