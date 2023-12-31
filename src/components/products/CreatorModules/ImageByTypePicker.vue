@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onBeforeMount } from 'vue'
 import AFilePicker from '@/components/commons/atoms/AFilePicker.vue'
 import AButton from '@/components/commons/atoms/AButton.vue'
 const types = ref([
@@ -10,14 +10,16 @@ const types = ref([
     imageUrl: '',
   },
 ])
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Array,
     default: () => [],
   },
 })
 const emits = defineEmits(['update:modelValue'])
-
+onBeforeMount(() => {
+  types.value = props.modelValue
+})
 watch(
   () => types.value,
   (val) => {

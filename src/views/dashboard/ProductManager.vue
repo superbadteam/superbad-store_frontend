@@ -2,10 +2,12 @@
 import { ref, onBeforeMount } from 'vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import { useAuthStore } from '@/stores/auth.store'
+import AButton from '@/components/commons/atoms/AButton.vue'
 // services
 import { getMyProductsApi } from '@/services/product.service'
 const authStore = useAuthStore().state
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 // breadcrumb
 const routes = ref([
   {
@@ -31,6 +33,16 @@ const getMyProducts = async () => {
   products.value = res.data.data
   console.log('products', products.value)
 }
+
+const onEdit = (id) => {
+  console.log('onEdit')
+  router.push({
+    name: 'update-product',
+    params: {
+      id,
+    },
+  })
+}
 </script>
 
 <template>
@@ -51,16 +63,41 @@ const getMyProducts = async () => {
               <th scope="col" class="px-6 py-3">Sold</th>
               <th scope="col" class="px-6 py-3">Category</th>
               <th scope="col" class="px-6 py-3">Price</th>
+              <th scope="col" class="px-6 py-3">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="product in products" :key="product.id" class="bg-white border-b">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+              <th scope="row" class="max-w-[300px] truncate px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {{ product.name }}
               </th>
               <td class="px-6 py-4">{{ product.sold }}</td>
               <td class="px-6 py-4">Laptop</td>
               <td class="px-6 py-4">$2999</td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <AButton
+                    title="Edit"
+                    type="edit"
+                    class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
+                    @click="onEdit(product.id)"
+                  >
+                    <template #left>
+                      <i class="ri-pencil-line mr-2"></i>
+                    </template>
+                  </AButton>
+                  <AButton
+                    title="Delete"
+                    type="delete"
+                    class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
+                    @click="onCreate"
+                  >
+                    <template #left>
+                      <i class="ri-delete-bin-line mr-2"></i>
+                    </template>
+                  </AButton>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

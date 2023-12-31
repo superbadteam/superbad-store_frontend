@@ -5,37 +5,40 @@
         <BreadCrumb :routes="routes" />
       </div>
       <div class="w-full flex flex-col gap-10">
-        <!-- thumbnail -->
         <p class="text-3xl font-bold">Checkout(1)</p>
-        <div class="flex flex-row-reverse gap-20">
-          <div class="shadow-d-20 w-[370px] h-fit rounded-lg border-[1px]">
-            <div class="p-5 flex justify-between items-center border-b-[1px]">
-              <p class="text-base font-semibold">Order Summary</p>
-            </div>
-            <div class="p-5 flex flex-col gap-5 mt-3">
-              <div class="flex justify-between items-center">
-                <p class="text-base font-medium">Subtotal</p>
-                <p class="text-base font-semibold">${{ totalSubPrice }}</p>
+        <div class="max-md:flex-col-reverse flex flex-row-reverse gap-20">
+          <div>
+            <ShippingAddressDropdown v-model="shippingAddressId" />
+            <!-- checkout box -->
+            <div class="max-md:w-full mt-5 shadow-d-20 w-[370px] min-w-[370px] h-fit rounded-lg border-[1px]">
+              <div class="p-5 flex justify-between items-center border-b-[1px]">
+                <p class="text-base font-semibold">Order Summary</p>
               </div>
-              <div class="flex justify-between items-center">
-                <p class="text-base font-medium">Shipping</p>
-                <p class="text-base font-semibold">$0</p>
+              <div class="p-5 flex flex-col gap-5 mt-3">
+                <div class="flex justify-between items-center">
+                  <p class="text-base font-medium">Subtotal</p>
+                  <p class="text-base font-semibold">${{ totalSubPrice }}</p>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-base font-medium">Shipping</p>
+                  <p class="text-base font-semibold">$0</p>
+                </div>
+                <div class="flex justify-between items-center">
+                  <p class="text-base font-medium">Tax</p>
+                  <p class="text-base font-semibold">$0</p>
+                </div>
               </div>
-              <div class="flex justify-between items-center">
-                <p class="text-base font-medium">Tax</p>
-                <p class="text-base font-semibold">$0</p>
+              <div class="p-5 py-3 border-t-[1px] flex justify-between items-center mt-3">
+                <p class="text-base font-medium">Total</p>
+                <p class="text-xl font-bold">${{ totalSubPrice }}</p>
               </div>
-            </div>
-            <div class="p-5 py-3 border-t-[1px] flex justify-between items-center mt-3">
-              <p class="text-base font-medium">Total</p>
-              <p class="text-xl font-bold">${{ totalSubPrice }}</p>
-            </div>
-            <div class="p-5 pt-2">
-              <AButton
-                title="checkout"
-                class="text-white text-lg font-medium flex justify-center py-3"
-                @click="checkout"
-              />
+              <div class="p-5 pt-2">
+                <AButton
+                  title="checkout"
+                  class="text-white text-lg font-medium flex justify-center py-3"
+                  @click="checkout"
+                />
+              </div>
             </div>
           </div>
           <div class="flex-auto flex flex-col gap-7">
@@ -51,7 +54,7 @@
                   /> -->
                 <img class="w-[80px] h-[80px] rounded-md" :src="typeSelected?.imageUrl" alt="" />
                 <div>
-                  <RouterLink :to="`/products/${product.id}`" class="font-medium text-base">{{
+                  <RouterLink :to="`/products/${product.id}`" class="hover:underline font-medium text-base">{{
                     product.name
                   }}</RouterLink>
                   <p>({{ quantity }} items) type: {{ typeSelected.name }}</p>
@@ -87,10 +90,12 @@ import { ref, onBeforeMount, computed } from 'vue'
 // components
 import AButton from '@/components/commons/atoms/AButton.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
+import ShippingAddressDropdown from '@/components/commons/atoms/ShippingAddressDropdown.vue'
 // services
 import { getProductApi } from '@/services/product.service'
-import { orderApi } from '@/services/order.service'
+import { orderApi, addTrackingApi } from '@/services/order.service'
 // stores
+import { toast } from 'vue3-toastify'
 import { usePopupStore } from '@/stores/common.store'
 const popupStore = usePopupStore()
 import { useAuthStore } from '@/stores/auth.store'
@@ -136,6 +141,7 @@ const totalSubPrice = computed(() => {
   return typeSelected.value?.price * quantity?.value
 })
 
+const shippingAddressId = ref('')
 const checkout = async () => {
   try {
     popupStore.showPopup({
@@ -150,20 +156,38 @@ const checkout = async () => {
             return
           }
           const method = 'TakeFromCart'
-          const body = {
-            shippingAddressId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            cartItemIds: selectItems.value,
-          }
-          await orderApi(body, method)
+          // const body =
+          await orderApi(
+            {
+              shippingAddressId: shippingAddressId.value,
+              cartItemIds: selectItems.value,
+            },
+            method
+          )
+          await addTracking(route.params.id)
+          router.push({ name: 'checkout-success', params: { id: route.params.id } })
+          toast.success('Checkout success')
         } catch (error) {
           console.log(error)
-          router.push({ name: 'checkout-success', params: { id: route.params.id } })
+          toast.error('Checkout fail')
         }
       },
     })
   } catch (error) {
     console.log(error)
   }
+}
+
+const addTracking = async (productId) => {
+  const data = {
+    createdAt: '2023-12-27T00:30:11.512Z',
+    code: productId,
+    title: 'Picking up your item',
+    content: 'Your item is being picked up by the courier',
+    time: '2048-09-23T18:43:01.829Z',
+    shipper: 'Computers',
+  }
+  return await addTrackingApi(data)
 }
 </script>
 <style scoped></style>
