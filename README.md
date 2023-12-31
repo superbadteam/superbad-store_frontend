@@ -11,7 +11,7 @@
 
 
 ## Screenshots
-![Thumbnail](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/c0357c50-9866-4618-8d88-ef36e831af28)
+![Thumbnail](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/dcb053a6-5605-455a-bfa0-2eca1a1a75e4)
 
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/d33af85e-36d1-445a-9f51-c68c7531914b)
 ![image](https://github.com/superbadteam/superbad-store_frontend/assets/38585889/71720b65-2765-4f4e-9d96-f175f699e90f)
