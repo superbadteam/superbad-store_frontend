@@ -1,64 +1,53 @@
 <template>
-  <div class="min-h-screen h-screen relative">
-    <!-- <div ref="googleLoginBtn" class=""></div> -->
-    <!-- <div ref="googleLoginBtn" /> -->
-    <div class="h-full flex flex-col w-full">
-      <div class="flex-1 bg-[#0089ED] w-full h-full"></div>
-      <div class="flex-1"></div>
+  <div class="max-md:gap-3 max-md:flex-col min-h-screen h-screen flex">
+    <div class="max-md:h-[250px] lg:flex-auto bg-[#191a24] flex items-center px-10">
+      <img class="w-full h-full object-cover opacity-[60%]" src="@/assets/icons/travel.svg" alt="" />
     </div>
-
-    <div class="absolute top-0 left-0 w-full h-full flex justify-between items-center p-7 px-12 overflow-y-auto">
-      <div></div>
-      <div class="w-[500px] bg-white rounded-[30px] gb-shadow p-7 h-fit">
-        <!-- header -->
-        <div class="flex justify-between">
-          <div class="">
-            <p class="text-xl">Welcome to our shop</p>
-            <p class="text-[50px] font-medium">Sign in</p>
-          </div>
-          <div class="text-[#0089ED] text-sm font-bold cursor-pointer">Đăng ký</div>
+    <div class="max-md:w-full w-[45%] flex justify-start">
+      <div class="max-md:w-full w-[80%] flex flex-col items-center justify-center h-full px-10">
+        <div class="w-full flex flex-col items-center justify-center">
+          <p class="text-3xl font-bold">Login</p>
+          <p class="text-base font-medium mt-2">Login to your account</p>
         </div>
-        <!-- end header -->
-
-        <!-- form -->
-        <div class="mt-10">
-          <form class="mt-7" @submit.prevent="submit">
-            <div class="flex flex-col gap-7">
-              <div>
-                <label for="email" class="text-sm">Email</label>
-                <input
-                  id="email"
-                  v-model="email"
-                  type="text"
-                  class="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2"
-                />
-              </div>
-              <div>
-                <label for="email" class="text-sm">Password</label>
-                <input
-                  id="password"
-                  v-model="password"
-                  type="password"
-                  class="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2"
-                />
-              </div>
-            </div>
-            <p>
-              <a href="" class="text-[#0089ED] text-sm font-bold mt-3 block">Forgot password?</a>
-            </p>
-            <div class="mt-7">
-              <button
-                type="button"
-                class="w-full bg-[#0089ED] text-white rounded-[8px] p-3 font-bold text-lg"
-                @click="submit"
-              >
-                Đăng nhập
-              </button>
-            </div>
-          </form>
-          <router-link class="text-center pt-4 block" to="/register">
-            <p>Not have account yet? <span class="text-[#0089ED] font-bold">Register</span></p>
-          </router-link>
+        <div class="w-full flex flex-col items-center justify-center mt-10">
+          <div class="w-full">
+            <AInput
+              v-model="email"
+              label="Email"
+              style-custom="border-[#AFA2C3]"
+              is-required
+              placeholder="Nhập email..."
+            />
+          </div>
+          <div class="w-full mt-5">
+            <AInput
+              v-model="password"
+              label="Mật khẩu"
+              style-custom="border-[#AFA2C3]"
+              is-required
+              placeholder="Nhập mật khẩu..."
+              type="password"
+            />
+          </div>
+          <!-- forgot -->
+          <div class="w-full flex justify-end mt-2">
+            <RouterLink to="/forgot-password" class="text-[#3E334E] text-sm font-medium">Forgot password?</RouterLink>
+          </div>
+          <div class="w-full flex gap-3 mt-5">
+            <button class="bg-[#3E334E] text-white flex-[1] w-full py-3 font-bold rounded-lg" @click="submit">
+              Login
+            </button>
+            <RouterLink
+              to="/register"
+              class="block text-center border-[1px] border-[#3E334E] text-[#3E334E] flex-[1] w-full font-bold py-3 rounded-lg"
+            >
+              Sign up
+            </RouterLink>
+          </div>
+          <!-- copyright -->
+          <div class="w-full flex justify-center mt-5">
+            <p class="text-[#3E334E] text-sm font-medium">© 2021 superbadstore</p>
+          </div>
         </div>
       </div>
     </div>
@@ -66,43 +55,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { initAuthStore } from '@/stores'
-import { loginApi, loginGGApi } from '@/services/auth.service'
-// import { useNotification } from '@kyvg/vue3-notification'
-// const notification = useNotification()
+import { loginApi } from '@/services/auth.service'
+import AInput from '@/components/commons/atoms/AInput.vue'
+import { toast } from 'vue3-toastify'
 const router = useRouter()
-const route = useRoute()
 const email = ref('')
 const password = ref('')
-const googleLoginBtn = ref()
-onMounted(() => {
-  // console.log('onBeforeMount')
-  // const gClientId = '539910609167-67i01tcoja47s71qshaeodhcc69d5u99.apps.googleusercontent.com'
-  // window.google.accounts.id.initialize({
-  //   client_id: gClientId,
-  //   scope: 'email profile openid',
-  //   callback: handleCredentialResponse,
-  //   auto_select: true,
-  // })
-  // window.google.accounts.id.renderButton(googleLoginBtn.value, { theme: 'outline', size: 'large', width: '400' })
-  // window.google.accounts.id.prompt()
-})
-
-const handleCredentialResponse = async (res) => {
-  try {
-    await loginGGApi({ credential: res.credential }).then((res) => {
-      const data = res['data']
-      localStorage.setItem('access_token', data.tokens.access.token)
-      localStorage.setItem('refresh_token', data.tokens.refresh.token)
-    })
-    await initAuthStore()
-    router.push('/')
-  } catch (error) {
-    
-  }
-}
 
 const submit = async () => {
   try {
@@ -122,12 +83,7 @@ const submit = async () => {
     }
   } catch (error) {
     console.log(error)
-    // notification.notify({
-    //   type: 'error',
-    //   title: 'Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập',
-    //   text: error.response.data.message,
-    // })
-    console.log(error)
+    toast.error('Login failed, please check your login information')
   }
 }
 </script>
