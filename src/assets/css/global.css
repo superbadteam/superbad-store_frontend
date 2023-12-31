@@ -28,7 +28,7 @@ input {
   box-shadow: none;
 }
 input:focus {
-  border: 2px solid #2563eb !important;
+  border: 1px solid #2563eb !important;
   box-shadow: none !important;
   /* transition: all 0.3s ease-in-out; */
 }
@@ -132,4 +132,12 @@ input:focus {
   color: #4b5563;
   background-color: #fff;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    transition: background-color 5000s ease-in-out 0s;
 }

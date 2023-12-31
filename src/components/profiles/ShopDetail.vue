@@ -12,7 +12,10 @@
       </div>
     </div>
     <div class="flex ml-5">
-      <router-link to="/shop" class="border-[2px] border-third-100 h-fit text-third-100 py-2 px-3 rounded-md">
+      <router-link
+        :to="`/shop/${shop.id}`"
+        class="border-[2px] border-third-100 h-fit text-third-100 py-2 px-3 rounded-md"
+      >
         <i class="ri-store-2-fill"></i> View shop
       </router-link>
     </div>

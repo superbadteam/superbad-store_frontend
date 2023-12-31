@@ -59,8 +59,8 @@ const openImage = () => {
 }
 </script>
 <template>
-  <div class="max-md:w-full max-md:min-w-[unset] w-[350px] min-w-[350px]">
-    <div id="images" class="w-full bg-slate-300 h-[380px] overflow-hidden rounded-md mb-2">
+  <div class="max-md:w-full max-md:min-w-[unset] w-[400px] min-w-[400px]">
+    <div id="images" class="w-full bg-slate-300 h-[400px] overflow-hidden rounded-md mb-2">
       <div
         v-for="(thumb, index) in listImages"
         v-show="(!currentImageSelected && index === 0) || currentImageSelected?.id === thumb.id"
@@ -72,7 +72,7 @@ const openImage = () => {
       </div>
     </div>
 
-    <swiper style="padding: 0 0px 10px 0px" class="w-full pb-2" :slides-per-view="'auto'" :space-between="10">
+    <swiper style="padding: 0 0px 10px 0px" class="w-full pb-2" :slides-per-view="'auto'" :space-between="5">
       <swiper-slide v-for="(thumb, index) in listImages" :key="thumb.id" style="width: auto" class="w-fit">
         <div
           class="hover:border-gray-700 border-[2px] border-transparent overflow-hidden cursor-zoom-in w-[80px] h-[80px] rounded-md"

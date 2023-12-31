@@ -24,6 +24,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  styleCustom: {
+    type: String,
+    default: ' border-[2px] border-[#ebebeb]',
+  },
 })
 defineEmits(['update:modelValue'])
 </script>
@@ -34,7 +38,8 @@ defineEmits(['update:modelValue'])
     </p>
     <input
       :value="modelValue"
-      class="w-full rounded-md border-[2px] border-[#ebebeb]"
+      :class="styleCustom"
+      class="w-full rounded-md"
       :type="isPassword ? 'password' : type"
       :placeholder="placeholder"
       @input="$emit('update:modelValue', $event.target.value)"

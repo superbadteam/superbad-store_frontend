@@ -16,6 +16,12 @@ module.exports = {
         'secondary-light': '#babbcabd',
         'secondary-200': '#ffcc5c',
         'third-100': '#5a4098',
+        'third-200': '#7d5ebc',
+        'forth-100': '#f5dbc4',
+      },
+      backgroundImage: {
+        'hero-pattern': 'url(/src/assets/images/hero-pattern.svg)',
+        'c-gradient-100': 'linear-gradient(to bottom, #fff9ec 0, #fff 90%)',
       },
       boxShadow: {
         'd-10': '0px 4px 35px 0px rgba(0, 0, 0, 0.08);',
