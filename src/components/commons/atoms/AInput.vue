@@ -1,5 +1,6 @@
 <script setup>
-defineProps({
+import { useField } from 'vee-validate'
+const props = defineProps({
   label: {
     type: String,
     required: true,
@@ -28,7 +29,17 @@ defineProps({
     type: String,
     default: ' border-[2px] border-[#ebebeb]',
   },
+  name: {
+    type: String,
+    default: '',
+  },
+  rules: {
+    type: Object,
+    default: () => ({}),
+  },
 })
+const { value, errorMessage } = useField(() => props.name)
+
 defineEmits(['update:modelValue'])
 </script>
 <template>
@@ -37,12 +48,16 @@ defineEmits(['update:modelValue'])
       {{ label }} <span v-if="isRequired" class="text-rose-600">*</span>
     </p>
     <input
-      :value="modelValue"
+      v-model="value"
       :class="styleCustom"
       class="w-full rounded-md"
       :type="isPassword ? 'password' : type"
       :placeholder="placeholder"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :name="name"
     />
+    <div class="w-full flex mt-2 items-center">
+      <p class="text-rose-600 text-sm font-medium">
+        <i v-if="errorMessage" class="ri-error-warning-fill mr-1"></i>{{ errorMessage }}</p>
+    </div>
   </div>
 </template>

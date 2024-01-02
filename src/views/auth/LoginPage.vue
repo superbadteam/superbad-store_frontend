@@ -12,7 +12,7 @@
         <div class="w-full flex flex-col items-center justify-center mt-10">
           <div class="w-full">
             <AInput
-              v-model="email"
+              name="email"
               label="Email"
               style-custom="border-[#AFA2C3]"
               is-required
@@ -21,7 +21,7 @@
           </div>
           <div class="w-full mt-5">
             <AInput
-              v-model="password"
+              name="password"
               label="Mật khẩu"
               style-custom="border-[#AFA2C3]"
               is-required
@@ -34,7 +34,7 @@
             <RouterLink to="/forgot-password" class="text-[#3E334E] text-sm font-medium">Forgot password?</RouterLink>
           </div>
           <div class="w-full flex gap-3 mt-5">
-            <button class="bg-[#3E334E] text-white flex-[1] w-full py-3 font-bold rounded-lg" @click="submit">
+            <button class="bg-[#3E334E] text-white flex-[1] w-full py-3 font-bold rounded-lg" @click="onLogin">
               Login
             </button>
             <RouterLink
@@ -55,19 +55,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 import { useRouter } from 'vue-router'
 import { initAuthStore } from '@/stores'
 import { loginApi } from '@/services/auth.service'
 import AInput from '@/components/commons/atoms/AInput.vue'
 import { toast } from 'vue3-toastify'
 const router = useRouter()
-const email = ref('')
-const password = ref('')
 
-const submit = async () => {
+const submit = async (val) => {
+  console.log(val)
+  const { email, password } = val
   try {
-    await loginApi({ email: email.value, password: password.value }).then((res) => {
+    await loginApi({ email, password }).then((res) => {
       const data = res['data']
       console.log(data)
       localStorage.setItem('access_token', data.token.accessToken)
@@ -85,5 +86,23 @@ const submit = async () => {
     console.log(error)
     toast.error('Login failed, please check your login information')
   }
+}
+
+// validate password have min 8, have number vs uppercase
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    email: yup.string().required().email(),
+    password: yup
+      .string()
+      .required()
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/,
+        'Password must contain at least 8 characters, 1 number and 1 letter'
+      ),
+  }),
+})
+
+const onLogin = () => {
+  handleSubmit(submit)()
 }
 </script>

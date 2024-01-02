@@ -33,14 +33,6 @@ const initApp = async () => {
   app.use(Vue3Toastify, {
     position: 'top-center',
     duration: 3000,
-    pauseOnFocusLoss: true,
-    pauseOnHover: true,
-    closeOnClick: true,
-    processBar: false,
-    icon: true,
-    transition: 'Vue-Toastification__bounce',
-    maxToasts: 20,
-    newestOnTop: true,
   })
   router.isReady().then(() => {
     console.log('router ready')

@@ -136,17 +136,12 @@ const totalImageUploaded = ref({
         <BreadCrumb :routes="routes" />
       </div>
       <div class="flex gap-2">
-        <AButton
-          title="Cancel"
-          type="cancel"
-          class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
-          @click="onCreate"
-        >
+        <AButton title="Cancel" type="cancel" class="w-fit h-fit py-2 px-3" @click="onCreate">
           <template #left>
             <i class="ri-close-line"></i>
           </template>
         </AButton>
-        <AButton title="Create" class="w-fit h-fit py-2 px-3 text-white bg-blue-500" @click="onCreate">
+        <AButton title="Update" class="w-fit h-fit py-2 px-3 text-white bg-blue-500" @click="onCreate">
           <template #left>
             <i class="ri-save-line"></i>
           </template>

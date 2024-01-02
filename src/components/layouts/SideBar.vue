@@ -5,7 +5,7 @@
       <div class="flex p-4 border-b-[1px]">
         <img class="w-[40px] h-[40px] rounded-full" src="@/assets/images/avatar-default.jpg" alt="" />
         <div class="flex flex-col ml-3">
-          <span class="text-base font-bold">John Doe</span>
+          <span class="text-base font-bold">{{ authStore.user.name }}</span>
           <span class="text-xs text-primary-200">
             <i class="ri-map-pin-2-fill"></i>
             <span class="ml-1">Hanoi, Vietnam</span>
@@ -53,6 +53,7 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
-
+import { useAuthStore } from '@/stores/auth.store'
+const authStore = useAuthStore().state
 const tabRoute = ref(['create-product', 'manage-product', 'profile-settings'])
 </script>
