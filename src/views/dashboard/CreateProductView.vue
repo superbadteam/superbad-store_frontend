@@ -80,7 +80,11 @@ const newProduct = ref({
   description: '',
   categoryId: '',
   condition: '',
-  types: [],
+  types: [
+    {
+      name: '',
+    },
+  ],
   images: [],
   parentCategory: '',
 })

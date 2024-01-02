@@ -6,14 +6,15 @@
     <div class="max-md:w-full w-[45%] flex justify-start">
       <div class="max-md:w-full w-[80%] flex flex-col items-center justify-center h-full px-10">
         <div class="w-full flex flex-col items-center justify-center">
-          <p class="text-3xl font-bold">Login</p>
-          <p class="text-base font-medium mt-2">Login to your account</p>
+          <p class="text-3xl font-bold">Register</p>
+          <p class="text-base font-medium mt-2">Register and explore the online market</p>
         </div>
         <div class="w-full flex flex-col items-center justify-center mt-10">
           <div class="w-full">
             <AInput
               v-model="email"
               label="Email"
+              name="email"
               style-custom="border-[#AFA2C3]"
               is-required
               placeholder="Enter your email..."
@@ -23,6 +24,7 @@
           <div class="w-full mt-5">
             <AInput
               v-model="name"
+              name="name"
               label="Name"
               style-custom="border-[#AFA2C3]"
               is-required
@@ -32,6 +34,7 @@
           <div class="w-full mt-5">
             <AInput
               v-model="password"
+              name="password"
               label="Password"
               style-custom="border-[#AFA2C3]"
               is-required
@@ -42,6 +45,7 @@
           <div class="w-full mt-5">
             <AInput
               v-model="confirmPassword"
+              name="confirmPassword"
               label="Confirm password"
               style-custom="border-[#AFA2C3]"
               is-required
@@ -54,7 +58,7 @@
             <RouterLink to="/forgot-password" class="text-[#3E334E] text-sm font-medium">Forgot password?</RouterLink>
           </div>
           <div class="w-full flex gap-3 mt-5">
-            <button class="bg-[#3E334E] text-white flex-[1] w-full py-3 font-bold rounded-lg" @click="submit">
+            <button class="bg-[#3E334E] text-white flex-[1] w-full py-3 font-bold rounded-lg" @click="onRegister">
               Sign up
             </button>
             <RouterLink
@@ -75,18 +79,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 import { useRouter } from 'vue-router'
 import { registerApi } from '@/services/auth.service'
 import { toast } from 'vue3-toastify'
 import AInput from '@/components/commons/atoms/AInput.vue'
 const router = useRouter()
-const email = ref('')
-const password = ref('')
-const name = ref('')
-const confirmPassword = ref('')
 
-const submit = async () => {
+const submit = async (val) => {
+  const { email, password, name, confirmPassword } = val
   try {
     await registerApi({
       email: email.value,
@@ -102,5 +104,27 @@ const submit = async () => {
     console.log(error)
     toast.error('Register failed!')
   }
+}
+
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    email: yup.string().required().email(),
+    name: yup.string().required(),
+    password: yup
+      .string()
+      .required()
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/,
+        'Password must contain at least 8 characters, 1 number and 1 letter'
+      ),
+    confirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password'), null], 'Passwords must match'),
+  }),
+})
+
+const onRegister = () => {
+  handleSubmit(submit)()
 }
 </script>

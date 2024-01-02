@@ -97,6 +97,10 @@
         <ShopDetail :shop="shopDetail" />
         <div class="border-b-[1px] pb-4"></div>
       </div>
+      <!-- reviews -->
+      <div class="w-full ">
+        <ReviewContainer />
+      </div>
     </div>
   </div>
 </template>
@@ -107,6 +111,7 @@ import ANumberInput from '@/components/commons/atoms/ANumberInput.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import ThumbnailsProduct from '@/components/products/ThumbnailsProduct.vue'
 import ShopDetail from '@/components/profiles/ShopDetail.vue'
+import ReviewContainer from '@/components/reviews/index.vue'
 // services
 import { getProductApi } from '@/services/product.service'
 import { addToCartApi } from '@/services/cart.service'
@@ -155,34 +160,38 @@ const priceComputed = computed(() => {
 })
 
 const getProduct = async () => {
-  const res = await getProductApi(route.params.id)
-  product.value = res.data
-  console.log(product.value)
+  try {
+    const res = await getProductApi(route.params.id)
+    product.value = res.data
+    console.log(product.value)
 
-  let routeSubCategory = {}
-  const routeCategory = masterStore.state.categories.find((category) =>
-    category.subCategories.find((subCategory) => {
-      if (subCategory.id === product.value.categoryId) {
-        routeSubCategory = subCategory
-        return true
+    let routeSubCategory = {}
+    const routeCategory = masterStore.state.categories.find((category) =>
+      category.subCategories.find((subCategory) => {
+        if (subCategory.id === product.value.categoryId) {
+          routeSubCategory = subCategory
+          return true
+        }
+        return false
+      })
+    )
+    routes.value.push(
+      {
+        name: routeCategory.name,
+        path: `/category/${routeCategory.id}`,
+      },
+      {
+        name: routeSubCategory.name,
+        path: `/category/${routeCategory.id}/sub-category/${routeSubCategory.id}`,
+      },
+      {
+        name: product.value.name,
+        path: `/product/${product.value.id}`,
       }
-      return false
-    })
-  )
-  routes.value.push(
-    {
-      name: routeCategory.name,
-      path: `/category/${routeCategory.id}`,
-    },
-    {
-      name: routeSubCategory.name,
-      path: `/category/${routeCategory.id}/sub-category/${routeSubCategory.id}`,
-    },
-    {
-      name: product.value.name,
-      path: `/product/${product.value.id}`,
-    }
-  )
+    )
+  } catch (error) {
+    router.push({ name: 'not-found' })
+  }
 }
 
 const chooseType = (type) => {
@@ -209,8 +218,12 @@ const shopDetail = ref({
 })
 
 onBeforeMount(async () => {
-  await getProduct()
-  await getUser()
+  try {
+    await getProduct()
+    await getUser()
+  } catch (error) {
+    console.log(error)
+  }
 })
 const getUser = async () => {
   const res = await userStore.getUser(product.value.userId)

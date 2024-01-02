@@ -68,20 +68,20 @@ const onEdit = (id) => {
           </thead>
           <tbody>
             <tr v-for="product in products" :key="product.id" class="bg-white border-b">
-              <th scope="row" class="max-w-[300px] truncate px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                {{ product.name }}
+              <th scope="row" class="max-w-[300px] px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                <RouterLink :to="`/products/${product.id}`" class="flex gap-2 items-center">
+                  <LazyImg :src="product.imageUrl" alt="" class-style="w-10 h-10 rounded-lg mr-4 object-cover" />
+                  <p class="truncate">
+                    {{ product.name }}
+                  </p>
+                </RouterLink>
               </th>
               <td class="px-6 py-4">{{ product.sold }}</td>
               <td class="px-6 py-4">Laptop</td>
               <td class="px-6 py-4">$2999</td>
               <td class="px-6 py-4">
                 <div class="flex gap-2">
-                  <AButton
-                    title="Edit"
-                    type="edit"
-                    class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
-                    @click="onEdit(product.id)"
-                  >
+                  <AButton title="Edit" type="edit" class="w-fit h-fit py-2 px-3" @click="onEdit(product.id)">
                     <template #left>
                       <i class="ri-pencil-line mr-2"></i>
                     </template>
@@ -89,7 +89,7 @@ const onEdit = (id) => {
                   <AButton
                     title="Delete"
                     type="delete"
-                    class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
+                    class="w-fit h-fit py-2 px-3 bg-rose-700 text-primary-200"
                     @click="onCreate"
                   >
                     <template #left>

@@ -5,11 +5,18 @@ import { useMasterStore } from './master.store'
 export const initAuthStore = async () => {
   const authStore = useAuthStore()
   if (localStorage.getItem('access_token')) {
-    const { data } = await getInfo()
-    authStore.setAuthStore({
-      user: data,
-      isLoggedIn: true,
-    })
+    try {
+      const { data } = await getInfo()
+      authStore.setAuthStore({
+        user: data,
+        isLoggedIn: true,
+      })
+    } catch (error) {
+      console.log(error)
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      window.location.reload()
+    }
     console.log('initAuthStore', authStore)
   }
 }
