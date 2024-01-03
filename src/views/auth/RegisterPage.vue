@@ -91,10 +91,10 @@ const submit = async (val) => {
   const { email, password, name, confirmPassword } = val
   try {
     await registerApi({
-      email: email.value,
-      password: password.value,
-      confirmPassword: confirmPassword.value,
-      name: name.value,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+      name: name,
     }).then((res) => {
       console.log(res)
       toast.success('Register success!')
