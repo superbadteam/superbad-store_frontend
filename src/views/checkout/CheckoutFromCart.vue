@@ -159,9 +159,9 @@ const checkout = async () => {
           method
         )
         await addTracking(route.params.id)
+        router.push({ name: 'checkout-success', params: { id: route.params.id } })
       } catch (error) {
         console.log(error)
-        router.push({ name: 'checkout-success', params: { id: route.params.id } })
       }
     },
   })
