@@ -60,18 +60,21 @@ const logout = () => {
 
         <!-- body -->
         <div class="pb-2 border-b-[1px]">
-          <div
+          <RouterLink
+            to="/dashboard/profile-settings"
             class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer"
-            @click="modal.isShowProfile = true"
           >
             <i class="ri-user-line"></i>
             <p>Profile</p>
-          </div>
-          <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+          </RouterLink>
+          <RouterLink
+            to="/dashboard/manage-product"
+            class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer"
+          >
             <i class="ri-pass-pending-line"></i>
             <p>Your post</p>
-          </div>
-          <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+          </RouterLink>
+          <!-- <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
             <i class="ri-qr-scan-2-line"></i>
             <p>Get shop QR link</p>
           </div>
@@ -81,9 +84,9 @@ const logout = () => {
           >
             <i class="ri-lock-line"></i>
             <p>Change password</p>
-          </div>
+          </div> -->
         </div>
-        <div @click="logout" class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+        <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer" @click="logout">
           <i class="ri-login-box-line"></i>
           <p>logout</p>
         </div>
