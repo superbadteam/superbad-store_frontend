@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { searchProductsApi } from '@/services/product.service';
+import { searchProductsApi } from '@/services/product.service'
 import 'swiper/css'
 const mySwiper = ref(null)
 
@@ -125,7 +125,7 @@ const products = ref([
     <!-- title flash sale -->
     <div class="w-full flex justify-between p-4">
       <div class="flex">
-        <h2 class="text-xl font-bold">Newest product</h2>
+        <h2 class="text-xl font-bold">Recommend For You</h2>
       </div>
       <div class="text-[#5a4098]">See more</div>
     </div>

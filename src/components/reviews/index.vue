@@ -1,14 +1,10 @@
 <template>
-  <div class="max-lg:flex-col max-lg:w-full w-[80%] flex gap-5">
+  <!-- <div class="max-lg:flex-col max-lg:w-full w-[80%] flex gap-5">
     <OveralRating />
     <div class="flex-auto">
-      <div class="flex w-full justify-between">
-        <p class="text-xl font-bold">Customer reviews</p>
-        <p class="font-bold">Sort by</p>
-      </div>
       <div
         v-if="!isShowInput"
-        class="flex justify-between bg-slate-100 w-full items-center px-5 border-[2px] rounded-lg py-5 mt-5"
+        class="flex justify-between bg-slate-100 w-full items-center px-5 border-[2px] rounded-lg py-5 "
       >
         <p>Share your thoughts with other customers</p>
         <div
@@ -40,21 +36,22 @@
             <ReviewStars />
           </div>
           <div class="flex gap-2">
-            <AButton title="Cancel" type="cancel">Cancel</AButton>
+            <AButton title="Cancel" type="cancel" @click="isShowInput = false">Cancel</AButton>
             <AButton title="Submit" type="confirm" class="bg-third-100">Submit</AButton>
           </div>
         </div>
       </div>
-      <!-- comments -->
       <div class="mt-5">
-        <CommentContent />
+        <ProductReviews />
       </div>
     </div>
-  </div>
+  </div> -->
+  <ProductReviews />
 </template>
 <script setup>
 import OveralRating from './rating/OveralRating.vue'
-import CommentContent from './comment/CommentContent.vue'
+// import CommentContent from './comment/CommentContent.vue'
+import ProductReviews from './comment/ProductReviews.vue'
 import LazyImg from '../commons/atoms/LazyImg.vue'
 import AButton from '../commons/atoms/AButton.vue'
 import { ref } from 'vue'

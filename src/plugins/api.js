@@ -5,7 +5,6 @@ const excludeUrls = ['/auth/login', '/auth/refresh-tokens', '/shopping/users/me/
 const axiosApiInstance = axios.create()
 // set base api
 axiosApiInstance.defaults.baseURL = import.meta.env.VITE_API_URL
-// Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
   async (config) => {
     const access_token = localStorage.getItem('access_token')

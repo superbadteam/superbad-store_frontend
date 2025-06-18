@@ -22,6 +22,16 @@ export const getMyProductsApi = async (params) => {
   return await axiosApiInstance.get(`${BASE_INVENTORY_ENDPOINT}/products/me`, { params })
 }
 
+export const getOurProductsApi = async (params) => {
+  const queryParams = new URLSearchParams({
+    PageIndex: params.PageIndex,
+    PageSize: params.PageSize
+  }).toString()
+  console.log(`${BASE_SALES_ENDPOINT}/products?${queryParams}`)
+  return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products?${queryParams}`)
+  // return await axiosApiInstance.get(`http://localhost:3000/api/shopping/products?${queryParams}`)
+}
+
 export const getProductApi = async (id) => {
   return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products/${id}`)
 }

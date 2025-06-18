@@ -3,7 +3,8 @@
     <div class="w-full flex justify-between">
       <h4 class="text-2xl font-bold">
         <i class="ri-shield-check-fill text-green-500"></i>
-        Offical Store</h4>
+        Offical Store
+      </h4>
       <h4 class="text-third-100">See All</h4>
     </div>
     <div class="w-full flex max-md:grid max-md:grid-cols-2 gap-5 max-md:gap-3 mt-5 flex-wrap">
@@ -14,7 +15,7 @@
         to="/"
       >
         <div class="w-full h-[140px] flex justify-center items-center bg-primary-400">
-          <img class="w-[70%] object-contain" :src="item.logo" alt="">
+          <img class="w-[70%] object-contain" :src="item.logo" alt="logo" />
         </div>
         <div class="flex py-3 flex-col items-center">
           <p class="font-medium">{{ item.name }}</p>

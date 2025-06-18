@@ -44,7 +44,21 @@
           <!-- detail -->
           <div class="border-b-[1px] pb-4"></div>
           <p class="text-lg text-gray-800 font-medium mt-4">Details</p>
-          <div v-html="product.description"></div>
+          <div class="whitespace-pre-line">
+            {{ displayedDescription }}
+            <div v-if="hasMoreDescription" class="mt-4">
+              <button 
+                @click="showFullDescription = !showFullDescription"
+                class="border-[1px] border-primary-600 rounded-md px-2 py-1 flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium"
+              >
+                <span>{{ showFullDescription ? 'Show less' : 'Show more' }}</span>
+                <i :class="[
+                  'ri-arrow-' + (showFullDescription ? 'up' : 'down') + '-s-line',
+                  'transition-transform duration-300'
+                ]"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <!-- add to card -->
         <div class="max-md:w-full min-w-[300px] w-[300px] h-fit p-5 border-[1px] rounded-lg">
@@ -99,7 +113,8 @@
       </div>
       <!-- reviews -->
       <div class="w-full ">
-        <ReviewContainer />
+        <!-- <ReviewContainer /> -->
+        <ProductReviews :product-rating="4.5" />
       </div>
     </div>
   </div>
@@ -111,7 +126,7 @@ import ANumberInput from '@/components/commons/atoms/ANumberInput.vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import ThumbnailsProduct from '@/components/products/ThumbnailsProduct.vue'
 import ShopDetail from '@/components/profiles/ShopDetail.vue'
-import ReviewContainer from '@/components/reviews/index.vue'
+// import ReviewContainer from '@/components/reviews/index.vue'
 // services
 import { getProductApi } from '@/services/product.service'
 import { addToCartApi } from '@/services/cart.service'
@@ -125,6 +140,10 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 import { useUserStore } from '@/stores/user.store'
+
+// comments 
+import ProductReviews from '@/components/reviews/comment/ProductReviews.vue'
+
 const userStore = useUserStore()
 // breadcrumb
 const routes = ref([
@@ -147,6 +166,23 @@ const product = ref({
 })
 
 const typeSelected = ref(null)
+const isLoading = ref(false)
+const showFullDescription = ref(false)
+
+const descriptionLines = computed(() => {
+  if (!product.value.description) return []
+  return product.value.description.split('\n')
+})
+
+const displayedDescription = computed(() => {
+  if (!product.value.description) return ''
+  if (showFullDescription.value) return product.value.description
+  return descriptionLines.value.slice(0, 10)
+})
+
+const hasMoreDescription = computed(() => {
+  return descriptionLines.value.length > 10
+})
 
 const priceComputed = computed(() => {
   return typeSelected.value
@@ -161,9 +197,18 @@ const priceComputed = computed(() => {
 
 const getProduct = async () => {
   try {
+    isLoading.value = true
+    console.log('Fetching product with ID:', route.params.id)
     const res = await getProductApi(route.params.id)
+    
+    if (!res.data) {
+      console.error('No data returned from API')
+      router.push({ name: 'not-found' })
+      return
+    }
+
     product.value = res.data
-    console.log(product.value)
+    console.log('Product data:', product.value)
 
     let routeSubCategory = {}
     const routeCategory = masterStore.state.categories.find((category) =>
@@ -175,7 +220,17 @@ const getProduct = async () => {
         return false
       })
     )
-    routes.value.push(
+
+    if (!routeCategory || !routeSubCategory) {
+      console.error('Category or subcategory not found for product:', product.value.categoryId)
+      return
+    }
+
+    routes.value = [
+      {
+        name: 'Home',
+        path: '/',
+      },
       {
         name: routeCategory.name,
         path: `/category/${routeCategory.id}`,
@@ -188,9 +243,14 @@ const getProduct = async () => {
         name: product.value.name,
         path: `/product/${product.value.id}`,
       }
-    )
+    ]
   } catch (error) {
-    router.push({ name: 'not-found' })
+    console.error('Error fetching product:', error)
+    if (error.response?.status === 404) {
+      router.push({ name: 'not-found' })
+    }
+  } finally {
+    isLoading.value = false
   }
 }
 
