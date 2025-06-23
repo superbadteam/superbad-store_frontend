@@ -25,7 +25,7 @@ export const getMyProductsApi = async (params) => {
 export const getOurProductsApi = async (params) => {
   const queryParams = new URLSearchParams({
     PageIndex: params.PageIndex,
-    PageSize: params.PageSize
+    PageSize: params.PageSize,
   }).toString()
   console.log(`${BASE_SALES_ENDPOINT}/products?${queryParams}`)
   return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products?${queryParams}`)
@@ -38,4 +38,8 @@ export const getProductApi = async (id) => {
 
 export const searchProductsApi = async (query) => {
   return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products?${query}`)
+}
+
+export const getRecommendedProducts = async () => {
+  return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products/recommended`)
 }
