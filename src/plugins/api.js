@@ -11,6 +11,7 @@ axiosApiInstance.interceptors.request.use(
     config.headers = {
       Authorization: `Bearer ${access_token}`,
       Accept: 'application/json',
+      'ngrok-skip-browser-warning': true, // Add this header
       // 'Content-Type': 'application/x-www-form-urlencoded',
     }
     return config
