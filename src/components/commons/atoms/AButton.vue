@@ -8,6 +8,10 @@ defineProps({
     type: String,
     default: 'confirm',
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 })
 </script>
 <template>
@@ -16,8 +20,14 @@ defineProps({
       type === 'confirm' ? 'bg-blue-500 text-white' : ' bg-gray-500 text-white'
     }`"
   >
-    <slot name="left"></slot>
-    <span>{{ title }}</span>
-    <slot name="right"></slot>
+    <template v-if="!loading">
+      <slot name="left" />
+      <span>{{ title }}</span>
+      <slot name="right" />
+    </template>
+    <template v-else>
+      <!-- spinner -->
+      <i class="svg-spinners-180-ring-with-bg" />
+    </template>
   </div>
 </template>

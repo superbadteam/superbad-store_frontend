@@ -1,22 +1,22 @@
 <template>
-  <div class="flex w-full px-5 pt-7 justify-center gap-5">
+  <div class="flex justify-center w-full gap-5 px-5 pt-7">
     <div class="flex w-full flex-col gap-5 max-w-[1200px] max-[1254px]:w-full h-fit rounded-[8px] justify-center py-5">
       <div class="w-full">
         <BreadCrumb :routes="routes" />
       </div>
       <!-- detail -->
-      <div class="max-md:flex-col w-full flex gap-10">
+      <div class="flex w-full gap-10 max-md:flex-col">
         <!-- thumbnail -->
         <ThumbnailsProduct :current-type="typeSelected" :product="product" />
         <div class="flex-auto">
-          <h1 class="text-xl font-bold mb-2">{{ product.name }}</h1>
+          <h1 class="mb-2 text-xl font-bold">{{ product.name }}</h1>
           <span class="text-primary-200">
             <i class="ri-star-fill text-[#ffaa28]"></i>
             <span class="ml-2 mr-1">4.5</span>
             <span>|</span>
             <span class="ml-1">sold {{ product.sold }}</span>
           </span>
-          <div class="text-xl font-semibold mt-3">
+          <div class="mt-3 text-xl font-semibold">
             <span v-if="priceComputed.price">
               {{ '$' + priceComputed.price }}
             </span>
@@ -26,7 +26,7 @@
           </div>
           <div class="border-b-[1px] pb-4"></div>
           <div class="mt-4">
-            <p class="text-lg text-gray-800 font-medium">
+            <p class="text-lg font-medium text-gray-800">
               Type: <span class="text-base font-light">{{ typeSelected?.name }}</span>
             </p>
             <div class="flex gap-2 mt-2">
@@ -43,7 +43,7 @@
           </div>
           <!-- detail -->
           <div class="border-b-[1px] pb-4"></div>
-          <p class="text-lg text-gray-800 font-medium mt-4">Details</p>
+          <p class="mt-4 text-lg font-medium text-gray-800">Details</p>
           <div class="whitespace-pre-line">
             {{ displayedDescription }}
             <div v-if="hasMoreDescription" class="mt-4">
@@ -62,7 +62,7 @@
         </div>
         <!-- add to card -->
         <div class="max-md:w-full min-w-[300px] w-[300px] h-fit p-5 border-[1px] rounded-lg">
-          <div class="w-full flex justify-between items-center">
+          <div class="flex items-center justify-between w-full">
             <div class="flex items-center gap-3">
               <img
                 class="h-[40px] w-[40px] rounded-md"
@@ -76,13 +76,13 @@
             </p>
           </div>
           <div class="border-b-[1px] pb-4"></div>
-          <div class="mt-4 flex justify-between items-center">
+          <div class="flex items-center justify-between mt-4">
             <p>Quantity</p>
             <ANumberInput v-model="cart.quantity" :max="typeSelected?.quantity" />
           </div>
-          <div class="mt-4 flex justify-between items-center">
+          <div class="flex items-center justify-between mt-4">
             <p>Sub total</p>
-            <p class="font-bold text-lg">${{ typeSelected?.price ? typeSelected?.price * cart.quantity : 0 }}</p>
+            <p class="text-lg font-bold">${{ typeSelected?.price ? typeSelected?.price * cart.quantity : 0 }}</p>
           </div>
           <p class="text-rose-500">{{ errValidate?.cart }}</p>
           <div
@@ -92,12 +92,12 @@
             <i class="ri-shopping-cart-2-line"></i> Add to cart
           </div>
           <div
-            class="cursor-pointer text-white bg-third-100 py-3 flex gap-3 justify-center rounded-md mt-4"
+            class="flex justify-center gap-3 py-3 mt-4 text-white rounded-md cursor-pointer bg-third-100"
             @click="buyNow"
           >
             Buy now
           </div>
-          <div class="flex justify-center mt-4 items-center gap-5 font-medium">
+          <div class="flex items-center justify-center gap-5 mt-4 font-medium">
             <p><i class="ri-heart-line"></i> Wish list</p>
             <div class="w-[1px] h-7 bg-slate-200"></div>
             <p><i class="ri-share-line"></i> Share</p>

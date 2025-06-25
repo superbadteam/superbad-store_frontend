@@ -112,23 +112,23 @@ const totalImageUploaded = ref({
       <p v-else class="text-lg">Creating product...</p>
     </template>
   </AFullLoading>
-  <!-- <div class="flex w-full px-5 pt-7 pb-10 justify-center gap-5"> -->
+  <!-- <div class="flex justify-center w-full gap-5 px-5 pb-10 pt-7"> -->
   <div class="max-lg:p-5 max-md:pt-10 relative flex flex-col w-full h-fit p-10 bg-[#fafafa] pt-10 rounded-[8px] py-5">
-    <!-- <div class="absolute backdrop-blur w-full h-full flex justify-center top-0 left-0 z-10 pt-14">
-      <div class="p-7 h-fit bg-white gb-shadow rounded-3xl flex flex-col justify-center items-center">
+    <!-- <div class="absolute top-0 left-0 z-10 flex justify-center w-full h-full backdrop-blur pt-14">
+      <div class="flex flex-col items-center justify-center bg-white p-7 h-fit gb-shadow rounded-3xl">
         <p class="text-lg font-semibold">Please confirm your email to create product</p>
         <p class="text-sm text-primary-200">We have sent you an email to confirm your email</p>
         <p class="text-sm text-primary-200">If you don't see the email, please check your spam folder</p>
         <p class="text-sm text-primary-200">If you still don't see the email, please contact us</p>
-        <AButton title="Resend email" class="mt-5 w-fit text-white bg-blue-500">
+        <AButton title="Resend email" class="mt-5 text-white bg-blue-500 w-fit">
           <template #left>
-            <i class="ri-mail-send-line mr-2"></i>
+            <i class="mr-2 ri-mail-send-line"></i>
           </template>
         </AButton>
       </div>
     </div> -->
     <!-- header -->
-    <header class="max-md:flex-col flex gap-2 justify-between w-full border-b-2 pb-5">
+    <header class="flex justify-between w-full gap-2 pb-5 border-b-2 max-md:flex-col">
       <div>
         <h1 class="text-2xl font-semibold">Create new product</h1>
         <BreadCrumb :routes="routes" />
@@ -137,14 +137,14 @@ const totalImageUploaded = ref({
         <AButton
           title="Cancel"
           type="cancel"
-          class="w-fit h-fit py-2 px-3 bg-slate-200 text-primary-200"
+          class="px-3 py-2 w-fit h-fit bg-slate-200 text-primary-200"
           @click="onCreate"
         >
           <template #left>
             <i class="ri-close-line"></i>
           </template>
         </AButton>
-        <AButton title="Create" class="w-fit h-fit py-2 px-3 text-white bg-blue-500" @click="onCreate">
+        <AButton title="Create" class="px-3 py-2 text-white bg-blue-500 w-fit h-fit" @click="onCreate">
           <template #left>
             <i class="ri-save-line"></i>
           </template>
@@ -152,10 +152,10 @@ const totalImageUploaded = ref({
       </div>
     </header>
     <!-- body -->
-    <div class="max-lg:flex-col flex w-full mt-5 gap-10 h-min">
+    <div class="flex w-full gap-10 mt-5 max-lg:flex-col h-min">
       <!-- information -->
       <div class="max-md:px-4 flex-1 h-full bg-white p-7 border-[1px] rounded-2xl">
-        <p class="text-lg font-medium mb-2">
+        <p class="mb-2 text-lg font-medium">
           Basic information
           <span>
             <!-- icon -->
@@ -166,7 +166,7 @@ const totalImageUploaded = ref({
           <div class="w-full">
             <AInput v-model="newProduct.name" is-required="true" label="Product name" placeholder="Enter name..." />
           </div>
-          <div class="max-lg:flex-wrap flex gap-2">
+          <div class="flex gap-2 max-lg:flex-wrap">
             <ADropdown
               v-model="newProduct.parentCategory"
               class="w-full h-full"
@@ -202,7 +202,7 @@ const totalImageUploaded = ref({
         <!-- description -->
         <div class="flex w-full gap-6 mt-6">
           <div class="w-full">
-            <p class="font-medium text-base text-gray-700 mb-3">Description:</p>
+            <p class="mb-3 text-base font-medium text-gray-700">Description:</p>
             <div class="border-[2px] min-h-[200px] rounded-md">
               <div ref="vEditor"></div>
             </div>

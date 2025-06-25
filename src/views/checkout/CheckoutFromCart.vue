@@ -1,10 +1,10 @@
 <template>
-  <div class="flex w-full px-5 pt-7 justify-center gap-5">
+  <div class="flex justify-center w-full gap-5 px-5 pt-7">
     <div class="flex w-full flex-col gap-5 max-w-[1200px] max-[1254px]:w-full h-fit rounded-[8px] justify-center py-5">
       <div class="w-full">
         <BreadCrumb :routes="routes" />
       </div>
-      <div class="w-full flex flex-col gap-10">
+      <div class="flex flex-col w-full gap-10">
         <p class="text-3xl font-bold">Checkout({{ masterStore.state.cart.items.length }})</p>
         <div class="flex flex-row-reverse gap-20">
           <div>
@@ -13,16 +13,16 @@
               <div class="p-5 flex justify-between items-center border-b-[1px]">
                 <p class="text-base font-semibold">Order Summary</p>
               </div>
-              <div class="p-5 flex flex-col gap-5 mt-3">
-                <div class="flex justify-between items-center">
+              <div class="flex flex-col gap-5 p-5 mt-3">
+                <div class="flex items-center justify-between">
                   <p class="text-base font-medium">Subtotal</p>
                   <p class="text-base font-semibold">${{ totalSubPrice }}</p>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex items-center justify-between">
                   <p class="text-base font-medium">Shipping</p>
                   <p class="text-base font-semibold">$0</p>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex items-center justify-between">
                   <p class="text-base font-medium">Tax</p>
                   <p class="text-base font-semibold">$0</p>
                 </div>
@@ -31,17 +31,17 @@
                 <p class="text-base font-medium">Total</p>
                 <p class="text-xl font-bold">${{ totalSubPrice }}</p>
               </div>
-              <p class="text-rose-600 px-5">{{ errValidate }}</p>
+              <p class="px-5 text-rose-600">{{ errValidate }}</p>
               <div class="p-5 pt-2">
                 <AButton
                   title="checkout"
-                  class="text-white text-lg font-medium flex justify-center py-3"
+                  class="flex justify-center py-3 text-lg font-medium text-white"
                   @click="checkout"
                 />
               </div>
             </div>
           </div>
-          <div class="flex-auto flex flex-col gap-7">
+          <div class="flex flex-col flex-auto gap-7">
             <div v-for="item in listCheckout" :key="item.id">
               <div>
                 <div class="flex gap-4">
@@ -55,7 +55,7 @@
                   />
                   <img class="w-[80px] h-[80px] rounded-md" :src="item.productType.product.imageUrl" alt="" />
                   <div>
-                    <RouterLink :to="`/products/${item.productType.product.id}`" class="font-medium text-base">{{
+                    <RouterLink :to="`/products/${item.productType.product.id}`" class="text-base font-medium">{{
                       item.productType.product.name
                     }}</RouterLink>
                     <p>{{ item.productType.name }}</p>
@@ -63,9 +63,9 @@
                   </div>
                   <p class="ml-auto text-base font-semibold">${{ item.productType.price * item.quantity }}</p>
                 </div>
-                <div class="flex justify-between items-center mt-3 pl-7">
-                  <p class="text-third-100 font-medium">
-                    <i class="ri-add-line font-bold"></i>
+                <div class="flex items-center justify-between mt-3 pl-7">
+                  <p class="font-medium text-third-100">
+                    <i class="font-bold ri-add-line"></i>
                     Add notes
                   </p>
                   <div class="flex items-center gap-4 text-base">
@@ -151,15 +151,15 @@ const checkout = async () => {
     onConfirm: async () => {
       try {
         const method = 'TakeFromCart'
-        await orderApi(
+        const { data } = await orderApi(
           {
             shippingAddressId: shippingAddressId.value,
             cartItemIds: selectItems.value,
           },
           method
         )
-        await addTracking(route.params.id)
-        router.push({ name: 'checkout-success', params: { id: route.params.id } })
+        await addTracking(data.id)
+        router.push({ name: 'checkout-success', params: { id: data.id } })
       } catch (error) {
         console.log(error)
       }

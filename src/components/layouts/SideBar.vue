@@ -21,23 +21,29 @@
             to="/dashboard/create-product"
             :class="{ 'bg-secondary-100  text-white': tabRoute[0] === route.name }"
             class="px-2 py-1 rounded-md"
-            ><i class="ri-shopping-bag-3-fill text-2xl mr-3"></i>Create new product</RouterLink
+            ><i class="mr-3 text-2xl ri-shopping-bag-3-fill"></i>Create new product</RouterLink
+          >
+          <RouterLink
+            to="/dashboard/ordered-product"
+            :class="{ 'bg-secondary-100  text-white': tabRoute[1] === route.name }"
+            class="px-2 py-1 rounded-md"
+            ><i class="mr-3 text-2xl ri-shopping-bag-3-fill"></i>My order</RouterLink
           >
           <RouterLink
             to="/dashboard/manage-product"
-            :class="{ 'bg-secondary-100  text-white': tabRoute[1] === route.name }"
+            :class="{ 'bg-secondary-100  text-white': tabRoute[2] === route.name }"
             class="px-2 py-1 rounded-md"
-            ><i class="ri-handbag-fill text-2xl mr-3"></i>Manage products</RouterLink
+            ><i class="mr-3 text-2xl ri-handbag-fill"></i>Manage products</RouterLink
           >
           <RouterLink
             to="/dashboard/profile-settings"
-            :class="{ 'bg-secondary-100  text-white': tabRoute[2] === route.name }"
+            :class="{ 'bg-secondary-100  text-white': tabRoute[3] === route.name }"
             class="px-2 py-1 rounded-md"
-            ><i class="ri-user-fill text-2xl mr-3"></i>Your profile</RouterLink
+            ><i class="mr-3 text-2xl ri-user-fill"></i>My profile</RouterLink
           >
-          <span class="px-2 py-1 rounded-md"><i class="ri-settings-2-fill text-2xl mr-3"></i>Setting account</span>
+          <span class="px-2 py-1 rounded-md"><i class="mr-3 text-2xl ri-settings-2-fill"></i>Setting account</span>
         </div>
-        <div class="cursor-pointer pb-1">
+        <div class="pb-1 cursor-pointer">
           <div class="border-b-[1px] mb-1"></div>
           <span
             class="flex items-center py-2 rounded-md hover:bg-[#f1f1f1] px-2 font-semibold text-base text-primary-200"
@@ -55,5 +61,5 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 import { useAuthStore } from '@/stores/auth.store'
 const authStore = useAuthStore().state
-const tabRoute = ref(['create-product', 'manage-product', 'profile-settings'])
+const tabRoute = ref(['create-product','ordered-product', 'manage-product', 'profile-settings'])
 </script>

@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps, defineEmits, watch } from 'vue'
 import { useField } from 'vee-validate'
 const props = defineProps({
   label: {
@@ -40,24 +41,27 @@ const props = defineProps({
 })
 const { value, errorMessage } = useField(() => props.name)
 
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'input'])
+watch(value, (newValue) => {
+  emit('input', newValue)
+})
 </script>
 <template>
-  <div class="flex flex-col gap-0 w-full">
-    <p class="font-medium text-gray-700 text-base mb-2">
+  <div class="flex flex-col w-full gap-0">
+    <p class="mb-2 text-base font-medium text-gray-700">
       {{ label }} <span v-if="isRequired" class="text-rose-600">*</span>
     </p>
     <input
       v-model="value"
       :class="styleCustom"
-      class="w-full rounded-md"
+      class="w-full rounded-md focus:border-[2px]"
       :type="isPassword ? 'password' : type"
       :placeholder="placeholder"
       :name="name"
     />
-    <div class="w-full flex mt-2 items-center">
-      <p class="text-rose-600 text-sm font-medium">
-        <i v-if="errorMessage" class="ri-error-warning-fill mr-1"></i>{{ errorMessage }}</p>
+    <div class="flex items-center w-full mt-2">
+      <p class="text-sm font-medium text-rose-600">
+        <i v-if="errorMessage" class="mr-1 ri-error-warning-fill"></i>{{ errorMessage }}</p>
     </div>
   </div>
 </template>
