@@ -81,6 +81,12 @@ const routes = [
         component: () => import('@/views/dashboard/OrderedProductView.vue'),
       },
        {
+        path: 'reviewed-product',
+        name: 'reviewed-product',
+        meta: { requiresAuth: true },
+        component: () => import('@/views/dashboard/ReviewedProductView.vue'),
+      },
+       {
         path: 'review-product/:id',
         name: 'review-product',
         meta: { requiresAuth: true },

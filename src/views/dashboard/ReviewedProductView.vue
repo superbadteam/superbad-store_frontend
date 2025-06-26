@@ -1,10 +1,10 @@
 <script setup>
-import { ref, onBeforeMount,computed, watch } from 'vue'
+import { ref, onBeforeMount,watch } from 'vue'
 import BreadCrumb from '@/components/commons/BreadCrumb.vue'
 import { useAuthStore } from '@/stores/auth.store'
+import VPagination from '@hennge/vue3-pagination'
 import AButton from '@/components/commons/atoms/AButton.vue'
 import '@hennge/vue3-pagination/dist/vue3-pagination.css'
-import VPagination from '@hennge/vue3-pagination'
 // services
 // import { getMyProductsApi } from '@/services/product.service'
 const authStore = useAuthStore().state
@@ -24,40 +24,35 @@ const routes = ref([
 ])
 
 const userData = ref(null)
+onBeforeMount(async () => {
+  console.log('authStore', authStore)
+  userData.value = { ...authStore?.user }
+  await fetchMeReviews()
+})
+
+const reviews = ref([])
 const meta = ref({
   pageIndex: 1,
   totalPages: 1,
 })
-onBeforeMount(async () => {
-  console.log('authStore', authStore)
-  userData.value = { ...authStore?.user }
-  await getMyProducts()
-})
 
-const products = ref([])
-const getMyProducts = async (pageIndex = 1) => {
-  const res = await getReviewables({pageIndex})
-  products.value = res.data.data
+const fetchMeReviews = async (pageIndex = 1) => {
+  // const res = await getMyProductsApi()
+  try {
+    const res = await getMeReviews({pageIndex})
+  
+  reviews.value = res.data.data
   meta.value = res.data.meta
-  console.log('products', products.value)
-}
-
-const onEdit = (id, orderId) => {
-  console.log('onEdit')
-  router.push({
-    name: 'review-product',
-    params: {
-      id,
-    },
-    query: {
-      orderId,
-    },
-  })
+  console.log('reviews', reviews.value)
+  } catch (error) {
+    console.error('Error fetching reviews:', error)
+  }
 }
 
 watch(() => meta.value.pageIndex, (newPageIndex) => {
-  getMyProducts(newPageIndex)
+  fetchMeReviews(newPageIndex)
 })
+
 </script>
 
 <template>
@@ -65,31 +60,13 @@ watch(() => meta.value.pageIndex, (newPageIndex) => {
     <header class="flex justify-between w-full gap-2 pb-5">
       <div>
         <h1 class="text-2xl font-semibold">
-          My order
+          My Review
         </h1>
         <BreadCrumb :routes="routes" />
       </div>
       <div class="sticky top-0 flex gap-2" />
     </header>
 
-    <!-- Tab Not review yet & Reviewed to filter-->
-    <!-- <div style="min-height: 40px;" class="flex gap-4 mb-6 overflow-hidden bg-gray-100 border rounded-lg shadow-lg min-h-10 w-fit">
-      <button
-        class="h-10 px-4 py-2 rounded focus:outline-none min-h-10"
-        :class="tab === 'notReviewed' ? 'bg-gray-400 text-white' : 'bg-gray-100 text-gray-700'"
-        @click="tab = 'notReviewed'"
-      >
-        Not reviewed yet
-      </button>
-      <button
-        class="h-10 px-4 py-2 rounded focus:outline-none min-h-10"
-        :class="tab === 'reviewed' ? 'bg-gray-400 text-white' : 'bg-gray-100 text-gray-700'"
-        @click="tab = 'reviewed'"
-      >
-        Reviewed
-      </button>
-    </div> -->
-    
     <div class="flex w-full gap-5">
       <div class="relative w-full overflow-x-auto border rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right">
@@ -102,33 +79,37 @@ watch(() => meta.value.pageIndex, (newPageIndex) => {
                 Product name
               </th>
               <!-- <th scope="col" class="px-6 py-3">Sold</th> -->
+          
+
               <th
-              
+               
                 scope="col"
                 class="px-6 py-3"
               >
-                Type
-              </th>
-              <th
-              
-                scope="col"
-                class="px-6 py-3"
-              >
-                Price
-              </th>
-              <th
-              
-                scope="col"
-                class="px-6 py-3"
-              >
-                Action
+                Review
               </th>
 
+              <th
+               
+                scope="col"
+                class="px-6 py-3"
+              >
+                Score
+              </th>
+
+              <!-- created at -->
+              <th
+               
+                scope="col"
+                class="px-6 py-3"
+              >
+                Created at
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="product in products"
+              v-for="product in reviews"
               :key="product.id"
               class="bg-white border-b"
             >
@@ -145,32 +126,18 @@ watch(() => meta.value.pageIndex, (newPageIndex) => {
                     alt=""
                     class-style="w-10 h-10 rounded-lg mr-4 object-cover"
                   />
-                  <div class="truncate max-w-[200px]">
+                  <div class="truncate max-w-[100px]">
                     {{ product.productName || product?.product?.name }}
                   </div>
                 </RouterLink>
               </th>
               <td class="px-6 py-4">
-                {{ product.typeName }}
+                {{ product.content }}
+              </td>
+               <td class="px-6 py-4">
+                {{ product.rating }}
               </td>
               <td class="px-6 py-4">
-                ${{ product.totalPrice }}
-              </td>
-              <td class="px-6 py-4">
-                <div class="flex gap-2">
-                  <AButton
-                    title="Review"
-                    type="edit"
-                    class="px-3 py-2 w-fit h-fit"
-                    @click="onEdit(product.productId, product.id)"
-                  >
-                    <template #left>
-                      <i class="mr-2 ri-pencil-line" />
-                    </template>
-                  </AButton>
-                </div>
-              </td>
-              <td class="px-6 py-4" v-if="tab === 'reviewed'">
                 {{ new Date(product.createdAt).toLocaleDateString() }}
               </td>
             </tr>
@@ -178,8 +145,6 @@ watch(() => meta.value.pageIndex, (newPageIndex) => {
         </table>
       </div>
     </div>
-
-
     <div class="py-5">
           <v-pagination
             v-model="meta.pageIndex"

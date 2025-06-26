@@ -10,12 +10,12 @@ export const getProductReviews = async (productId, data) => {
   return await axiosApiInstance.get(`${BASE_ENDPOINT_REVIEW}/reviews/products/${productId}`, { params: data })
 }
 
-export const getReviewables = async () => {
-  return await axiosApiInstance.get(`${BASE_ENDPOINT_REVIEW}/orders/me/reviewable`)
+export const getReviewables = async ({pageIndex}) => {
+  return await axiosApiInstance.get(`${BASE_ENDPOINT_REVIEW}/orders/me/reviewable?PageIndex=${pageIndex}&SortBy=CreatedAt&isDescending=true`)
 }
 
-export const getMeReviews = async () => {
-  return await axiosApiInstance.get(`${BASE_ENDPOINT_REVIEW}/reviews/me`)
+export const getMeReviews = async ({pageIndex}) => {
+  return await axiosApiInstance.get(`${BASE_ENDPOINT_REVIEW}/reviews/me?PageIndex=${pageIndex}&SortBy=CreatedAt&isDescending=true`)
 }
 
 export const postReview = async (id, data) => {
