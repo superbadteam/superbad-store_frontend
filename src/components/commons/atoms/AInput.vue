@@ -44,6 +44,7 @@ const { value, errorMessage } = useField(() => props.name)
 const emit = defineEmits(['update:modelValue', 'input'])
 watch(value, (newValue) => {
   emit('input', newValue)
+  emit('update:modelValue', newValue)
 })
 </script>
 <template>

@@ -35,7 +35,7 @@ const logout = () => {
       <p>{{ authStore.user.name }}</p>
       <img
         src="@/assets/images/avatar-default.jpg"
-        class="w-8 h-8 rounded-full object-cover cursor-pointer"
+        class="object-cover w-8 h-8 rounded-full cursor-pointer"
         alt=""
         @click.stop="modal.isShowSettings = !modal.isShowSettings"
       />
@@ -50,10 +50,10 @@ const logout = () => {
       <div class="flex flex-col h-full p-4 px-2 pb-3">
         <!-- header -->
         <div class="flex gap-4 items-center border-b-[1px] pb-2 px-2">
-          <img src="@/assets/images/avatar-default.jpg" class="w-8 h-8 rounded-full object-cover" alt="" />
+          <img src="@/assets/images/avatar-default.jpg" class="object-cover w-8 h-8 rounded-full" alt="" />
           <div class="flex flex-col">
             <p class="">{{ authStore.user.name }}</p>
-            <p class="text-xs">{{ authStore.user.email }}</p>
+            <p class="text-xs truncate max-w-[130px]">{{ authStore.user.email }}</p>
           </div>
         </div>
         <!-- end header -->
@@ -62,31 +62,31 @@ const logout = () => {
         <div class="pb-2 border-b-[1px]">
           <RouterLink
             to="/dashboard/profile-settings"
-            class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer"
+            class="flex gap-2 px-2 py-2 mt-2 rounded-lg cursor-pointer hover:bg-slate-100"
           >
             <i class="ri-user-line"></i>
             <p>Profile</p>
           </RouterLink>
           <RouterLink
             to="/dashboard/manage-product"
-            class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer"
+            class="flex gap-2 px-2 py-2 mt-2 rounded-lg cursor-pointer hover:bg-slate-100"
           >
             <i class="ri-pass-pending-line"></i>
             <p>Your post</p>
           </RouterLink>
-          <!-- <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+          <!-- <div class="flex gap-2 px-2 py-2 mt-2 rounded-lg cursor-pointer hover:bg-slate-100">
             <i class="ri-qr-scan-2-line"></i>
             <p>Get shop QR link</p>
           </div>
           <div
-            class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer"
+            class="flex gap-2 px-2 py-2 mt-2 rounded-lg cursor-pointer hover:bg-slate-100"
             @click="modal.isShowChangePassword = true"
           >
             <i class="ri-lock-line"></i>
             <p>Change password</p>
           </div> -->
         </div>
-        <div class="flex gap-2 py-2 px-2 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer" @click="logout">
+        <div class="flex gap-2 px-2 py-2 mt-2 rounded-lg cursor-pointer hover:bg-slate-100" @click="logout">
           <i class="ri-login-box-line"></i>
           <p>logout</p>
         </div>

@@ -191,8 +191,8 @@ const totalImageUploaded = ref({
               is-required="true"
               label="Condition"
               :options="[
-                { name: 'New', value: 'new' },
-                { name: 'Like new', value: 'Likenew' },
+                { name: 'new', value: 'new' },
+                { name: 'Likenew', value: 'Likenew' },
               ]"
               placeholder="Select condition..."
               required
