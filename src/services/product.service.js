@@ -43,3 +43,7 @@ export const searchProductsApi = async (query) => {
 export const getRecommendedProducts = async () => {
   return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products/recommended`)
 }
+
+export const getRecommendedProductsByProductId = async (productId) => {
+  return await axiosApiInstance.get(`${BASE_SALES_ENDPOINT}/products/${productId}/recommendations`)
+}

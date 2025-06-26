@@ -35,13 +35,13 @@
             class="px-2 py-1 rounded-md"
             ><i class="mr-3 text-2xl ri-handbag-fill"></i>Manage products</RouterLink
           >
-          <RouterLink
+          <!-- <RouterLink
             to="/dashboard/profile-settings"
             :class="{ 'bg-secondary-100  text-white': tabRoute[3] === route.name }"
             class="px-2 py-1 rounded-md"
             ><i class="mr-3 text-2xl ri-user-fill"></i>My profile</RouterLink
-          >
-          <span class="px-2 py-1 rounded-md"><i class="mr-3 text-2xl ri-settings-2-fill"></i>Setting account</span>
+          > -->
+          <!-- <span class="px-2 py-1 rounded-md"><i class="mr-3 text-2xl ri-settings-2-fill"></i>Setting account</span> -->
         </div>
         <div class="pb-1 cursor-pointer">
           <div class="border-b-[1px] mb-1"></div>

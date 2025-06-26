@@ -28,13 +28,13 @@ defineProps({
 
       <div class="mb-3">
         <span class="text-lg font-bold text-primary-600">
-          💲{{ product.minPrice }} - 💲{{product.maxPrice }}
+          💲{{ product.minPrice }} - 💲{{ product.maxPrice }}
         </span>
       </div>
 
       <div class="flex items-center justify-between text-sm text-gray-600">
         <div class="flex items-center">
-          <i class="ri-star-fill text-yellow-400"></i>
+          <i class="text-yellow-400 ri-star-fill" />
           <span class="ml-1">{{ product.rating.toFixed(1) }}</span>
         </div>
         <div>
