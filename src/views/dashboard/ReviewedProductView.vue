@@ -18,7 +18,7 @@ const routes = ref([
     path: '/',
   },
   {
-    name: 'My order',
+    name: 'My reviewed product',
     path: '/dashboard/manage-product',
   },
 ])
