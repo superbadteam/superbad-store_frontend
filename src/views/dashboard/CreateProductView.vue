@@ -68,6 +68,7 @@ const onCreate = async () => {
     .then((res) => {
       console.log(res)
       isCreating.value = false
+      window.location.href = `/dashboard/manage-product`
     })
     .catch((err) => {
       console.log(err)
