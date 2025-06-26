@@ -88,14 +88,14 @@ const itemFiltered = computed(() => {
     <!-- Tab Not review yet & Reviewed to filter-->
     <div class="flex gap-4 mb-6 overflow-hidden bg-gray-100 border rounded-lg shadow-lg min-h-10 w-fit">
       <button
-        class="px-4 py-2 rounded focus:outline-none"
+        class="h-10 px-4 py-2 rounded focus:outline-none min-h-10"
         :class="tab === 'notReviewed' ? 'bg-gray-400 text-white' : 'bg-gray-100 text-gray-700'"
         @click="tab = 'notReviewed'"
       >
         Not reviewed yet
       </button>
       <button
-        class="px-4 py-2 rounded focus:outline-none"
+        class="h-10 px-4 py-2 rounded focus:outline-none min-h-10"
         :class="tab === 'reviewed' ? 'bg-gray-400 text-white' : 'bg-gray-100 text-gray-700'"
         @click="tab = 'reviewed'"
       >
